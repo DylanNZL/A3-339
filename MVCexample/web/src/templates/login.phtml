@@ -1,0 +1,20 @@
+<?php
+    include "header.phtml"
+?>
+<div id="container">
+    <div id="titleBar">
+        <h1>Welcome to Toolshed</h1>
+    </div>
+
+    <div>
+        <form action="/login" method="POST">
+            Username: <input type="text" name="username" placeholder="Username">
+            Password: <input type="password" name="password" placeholder="Password">
+            <input type="submit">
+        </form>
+        <p>Don't have an account? <a href="/register">Register</a></p>
+    </div>
+</div>
+<?php
+    include "footer.phtml"
+?>
