@@ -158,6 +158,33 @@ class AccountModel extends Model
     }
 
     /**
+     * @param String $username
+     *
+     * @return $this
+     */
+    public function loadFromUsername($username) {
+        if (!$result = $this->db->query("SELECT * FROM `account` WHERE `username` = $username;")) {
+            // throw new ...
+            $this->_id = null;
+            $this->_name = null;
+            $this->_username = $username;
+            $this->_email = null;
+            $this->_password = null;
+
+            return $this;
+        }
+
+        $result = $result->fetch_assoc();
+        $this->_id = $result['id'];
+        $this->_name = $result['name'];
+        $this->_username = $username;
+        $this->_email = $result['email'];
+        $this->_password = $result['password'];
+
+        return $this;
+    }
+
+    /**
      * Saves account information to the database
      *
      * @return $this AccountModel

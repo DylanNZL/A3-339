@@ -2,14 +2,12 @@
 namespace agilman\a2\controller;
 
 use agilman\a2\model\AccountModel;
-use agilman\a2\model\AccountCollectionModel;
 use agilman\a2\view\View;
 
 /**
  * Class AccountController
  *
  * @package agilman/a2
- * @author  Andrew Gilman <a.gilman@massey.ac.nz>
  */
 class AccountController extends Controller
 {
@@ -19,7 +17,7 @@ class AccountController extends Controller
     public function indexAction()
     {
         $view = new View('login');
-       echo $view->render();
+        echo $view->render();
     }
 
     /**
@@ -39,7 +37,22 @@ class AccountController extends Controller
      */
     public function loginAction()
     {
-        ProductController::indexAction();
+        error_log($_POST['password']);
+        error_log($_POST['username']);
+
+        $account = new AccountModel();
+        $account = $account->loadFromUsername($_POST['username']);
+
+        if ($account->getId() == null) {
+            return($this->indexActionWithError("That username doesn't exist"));
+        } else if ($_POST['password'] != $account->getPassword()) {
+            return($this->indexActionWithError("Incorrect Password"));
+        } else {
+            setcookie("account", $account->getId(), time() + (86400 * 30), "/");
+            $view = new View('welcome');
+            $view->addData("accountName", $account->getName());
+            echo $view->render();
+        }
     }
 
     /**

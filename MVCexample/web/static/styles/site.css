@@ -1,3 +1,20 @@
 body {
     padding: 50px;
 }
+
+/*
+ * Login Page
+ */
+
+#titleBar {
+    text-align: center;
+}
+
+#formHolder {
+    margin-left: 30%;
+    margin-right: 30%;
+}
+
+#loginSubmit {
+
+}
