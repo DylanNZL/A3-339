@@ -23,42 +23,79 @@ define('APP_ROOT', __DIR__);
 
 $collection = new RouteCollection();
 
+// Home GET - Project index
 $collection->attachRoute(
     new Route(
-        '/account/', array(
-        '_controller' => 'agilman\a2\controller\AccountController::indexAction',
-        'methods' => 'GET',
-        'name' => 'accountIndex'
+        '/', array(
+            '_controller' => 'agilman\a2\controller\AccountController::indexAction',
+            'methods' => 'GET',
+            'name' => 'accountIndex'
         )
     )
 );
 
+// Login POST
 $collection->attachRoute(
     new Route(
-        '/account/create/', array(
-        '_controller' => 'agilman\a2\controller\AccountController::createAction',
-        'methods' => 'GET',
-        'name' => 'accountCreate'
+        '/login', array(
+            '_controller' => 'agilman\a2\controller\AccountController::loginAction',
+            'methods' => 'POST',
+            'name' => 'accountLogin'
         )
     )
 );
 
+// Register GET
 $collection->attachRoute(
     new Route(
-        '/account/delete/:id', array(
-        '_controller' => 'agilman\a2\controller\AccountController::deleteAction',
-        'methods' => 'GET',
-        'name' => 'accountDelete'
+        '/register', array(
+            '_controller' => 'agilman\a2\controller\AccountController::registerAction',
+            'methods' => 'GET',
+            'name' => 'accountRegister'
         )
     )
 );
 
+// Register POST
 $collection->attachRoute(
     new Route(
-        '/account/update/:id', array(
-        '_controller' => 'agilman\a2\controller\AccountController::updateAction',
-        'methods' => 'GET',
-        'name' => 'accountUpdate'
+        '/register', array(
+            '_controller' => 'agilman\a2\controller\AccountController::createAction',
+            'methods' => 'POST',
+            'name' => 'accountCreate'
+        )
+    )
+);
+
+// Home GET
+$collection->attachRoute(
+    new Route(
+        '/home', array(
+            '_controller' => 'agilman\a2\controller\ProductController::indexAction',
+            'methods' => 'GET',
+            'name' => 'productIndex'
+        )
+    )
+);
+
+// Browse GET
+$collection->attachRoute(
+    new Route(
+        '/browse', array(
+            '_controller' => 'agilman\a2\controller\ProductController::browseAction',
+            'methods' => 'GET',
+            'name' => 'accountBrowse'
+        )
+    )
+);
+
+// Search GET
+$collection->attachRoute(
+    new Route(
+        '/search', array(
+            '_controller' => 'agilman\a2\controller\ProductController::searchAction',
+            'methods' => 'GET',
+            'name' => 'accountBrowse'
         )
     )
 );

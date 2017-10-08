@@ -14,69 +14,60 @@ use agilman\a2\view\View;
 class AccountController extends Controller
 {
     /**
-     * Account Index action
+     * Account Index action (login page GET)
      */
-    public function indexAction() 
+    public function indexAction()
     {
-        $collection = new AccountCollectionModel();
-        $accounts = $collection->getAccounts();
-        $view = new View('accountIndex');
-        echo $view->addData('accounts', $accounts)
-            ->addData(
-                'linkTo', function ($route,$params=[]) {
-                    return $this->linkTo($route, $params);
-                }
-            )
-            ->render();
-    }
-    /**
-     * Account Create action
-     */
-    public function createAction() 
-    {
-        $account = new AccountModel();
-        $names = ['Bob','Mary','Jon','Peter','Grace'];
-        shuffle($names);
-        $account->setName($names[0]); // will come from Form data
-        $account->save();
-        $id = $account->getId();
-        $view = new View('accountCreated');
-        echo $view->addData('accountId', $id)
-            ->addData(
-                'linkTo', function ($route,$params=[]) {
-                    return $this->linkTo($route, $params);
-                }
-            )
-                  ->render();
+        $view = new View('login');
+       echo $view->render();
     }
 
     /**
-     * Account Delete action
-     *
-     * @param int $id Account id to be deleted
+     * Account Index action with an error (login page GET)
+     * @param String $error
      */
-    public function deleteAction($id)
+    public function indexActionWithError($error)
     {
-        (new AccountModel())->load($id)->delete();
-        $view = new View('accountDeleted');
-        echo $view->addData('accountId', $id)
-            ->addData(
-                'linkTo', function ($route,$params=[]) {
-                    return $this->linkTo($route, $params);
-                }
-            )
-            ->render();
+        $view = new View('login');
+        $view->addData("error", $error);
+        echo $view->render();
     }
+
     /**
-     * Account Update action
-     *
-     * @param int $id Account id to be updated
+     * Account Login action (login page POST)
+     * if successful login, render welcome.phtml, else render login page with errors
      */
-    public function updateAction($id) 
+    public function loginAction()
     {
-        $account = (new AccountModel())->load($id);
-        $account->setName('Joe')->save(); // new name will come from Form data
-
+        ProductController::indexAction();
     }
 
+    /**
+     * Account Register action (register page GET)
+     */
+    public function registerAction()
+    {
+        $view = new View('register');
+        echo $view->render();
+    }
+
+    /**
+     * Account Register action with an error (register page GET)
+     * @param String $error
+     */
+    public function registerActionWithError($error)
+    {
+        $view = new View('register');
+        $view->addData("error", $error);
+        echo $view->render();
+    }
+
+    /**
+     * Account Register action (register page POST)
+     * if successful creation, render welcome.phtml, else render register page with errors
+     */
+    public function createAction()
+    {
+       ProductController::indexAction();
+    }
 }
