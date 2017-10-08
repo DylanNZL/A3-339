@@ -182,7 +182,7 @@ class ProductModel extends Model
     }
 
     /**
-     * @param String $id
+     * @param int $id
      * @return ProductModel $this
      *
      * Load product from database by ID

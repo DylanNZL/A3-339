@@ -6,7 +6,6 @@ namespace agilman\a2\model;
  * Class AccountModel
  *
  * @package agilman/a2
- * @author  Andrew Gilman <a.gilman@massey.ac.nz>
  */
 class AccountModel extends Model
 {
@@ -19,7 +18,26 @@ class AccountModel extends Model
      */
     private $_name;
 
+    /**
+     * @var String Account UserName
+     */
+    private $_username;
 
+    /**
+     * @var String Account Email
+     */
+    private $_email;
+
+    /**
+     * @var String Account Password
+     */
+    private $_password;
+
+    /*
+     * =========================================================
+     * ==================== Getters/Setters ====================
+     * =========================================================
+     */
     /**
      * @return int Account ID
      */
@@ -49,6 +67,74 @@ class AccountModel extends Model
     }
 
     /**
+     * @return String
+     */
+    public function getUsername(): String
+    {
+        return $this->_username;
+    }
+
+    /**
+     * @param String $username
+     */
+    public function setUsername(String $username)
+    {
+        $this->_username = $username;
+    }
+
+    /**
+     * @return String
+     */
+    public function getEmail(): String
+    {
+        return $this->_email;
+    }
+
+    /**
+     * @param String $email
+     */
+    public function setEmail(String $email)
+    {
+        $this->_email = $email;
+    }
+
+    /**
+     * @return String
+     */
+    public function getPassword(): String
+    {
+        return $this->_password;
+    }
+
+    /**
+     * @param String $password
+     */
+    public function setPassword(String $password)
+    {
+        $this->_password = $password;
+    }
+
+    /*
+     * =========================================================
+     * ======================= Functions =======================
+     * =========================================================
+     */
+
+    function __construct()
+    {
+        parent::__construct();
+    }
+
+    function __constructWithVar($name, $username, $email, $password) {
+        $account = $this->__construct();
+
+        $account->_name = $name;
+        $account->_username = $username;
+        $account->_email = $email;
+        $account->_password = $password;
+    }
+
+    /**
      * Loads account information from the database
      *
      * @param int $id Account ID
@@ -63,6 +149,9 @@ class AccountModel extends Model
 
         $result = $result->fetch_assoc();
         $this->_name = $result['name'];
+        $this->_username = $result['username'];
+        $this->_email = $result['email'];
+        $this->_password = $result['password'];
         $this->_id = $id;
 
         return $this;
@@ -70,21 +159,20 @@ class AccountModel extends Model
 
     /**
      * Saves account information to the database
-
+     *
      * @return $this AccountModel
      */
     public function save()
     {
-        $name = $this->_name??"NULL";
         if (!isset($this->_id)) {
             // New account - Perform INSERT
-            if (!$result = $this->db->query("INSERT INTO `account` VALUES (NULL,'$name');")) {
+            if (!$result = $this->db->query("INSERT INTO `account` VALUES (NULL,'$this->_name', ' $this->_username', '$this->_email', '$this->_password');")) {
                 // throw new ...
             }
             $this->_id = $this->db->insert_id;
         } else {
             // saving existing account - perform UPDATE
-            if (!$result = $this->db->query("UPDATE `account` SET `name` = '$name' WHERE `id` = $this->_id;")) {
+            if (!$result = $this->db->query("UPDATE `account` SET `email` = '$this->_email', `password` = '$this->_password' WHERE `id` = $this->_id;")) {
                 // throw new ...
             }
 
@@ -92,21 +180,5 @@ class AccountModel extends Model
 
         return $this;
     }
-
-    /**
-     * Deletes account from the database
-
-     * @return $this AccountModel
-     */
-    public function delete()
-    {
-        if (!$result = $this->db->query("DELETE FROM `account` WHERE `account`.`id` = $this->_id;")) {
-            //throw new ...
-        }
-
-        return $this;
-    }
-
-
 
 }
