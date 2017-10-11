@@ -132,6 +132,8 @@ class AccountModel extends Model
         $account->_username = $username;
         $account->_email = $email;
         $account->_password = $password;
+
+        return $account;
     }
 
     /**
@@ -163,7 +165,7 @@ class AccountModel extends Model
      * @return $this
      */
     public function loadFromUsername($username) {
-        if (!$result = $this->db->query("SELECT * FROM `account` WHERE `username` = $username;")) {
+        if (!$result = $this->db->query("SELECT * FROM `account` WHERE `username` = '$username';")) {
             // throw new ...
             $this->_id = null;
             $this->_name = null;

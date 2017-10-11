@@ -1,6 +1,7 @@
 <?php
 namespace agilman\a2\controller;
 
+use agilman\a2\model\AccountCookie;
 use agilman\a2\model\AccountModel;
 use agilman\a2\view\View;
 
@@ -48,9 +49,11 @@ class AccountController extends Controller
         } else if ($_POST['password'] != $account->getPassword()) {
             return($this->indexActionWithError("Incorrect Password"));
         } else {
-            setcookie("account", $account->getId(), time() + (86400 * 30), "/");
+            $accountCookie = array('id' => $account->getId(), 'name' => $account->getName(), 'username' => $account->getUsername(), 'email' => $account->getEmail());
+            setcookie("account", json_encode($accountCookie), time() + (86400 * 30), "/");
+            error_log(json_encode($accountCookie));
             $view = new View('welcome');
-            $view->addData("accountName", $account->getName());
+            $view->addData("accountName", $accountCookie['name']);
             echo $view->render();
         }
     }
@@ -81,6 +84,15 @@ class AccountController extends Controller
      */
     public function createAction()
     {
-       ProductController::indexAction();
+        error_log($_POST['name']);
+        error_log($_POST['username']);
+        error_log($_POST['email']);
+        error_log($_POST['password']);
+        error_log($_POST['repeat']);
+
+        $account = AccountModel::constructWithVar($_POST['name'], $_POST['username'], $_POST['email'], $_POST['password']);
+        $account->save();
+
+        $this->indexAction();
     }
 }

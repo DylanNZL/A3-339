@@ -22,8 +22,16 @@ class ProductController
      */
     public function indexAction()
     {
-        $view = new View('welcome');
-        echo $view->render();
+        if  (!isset($_COOKIE["account"])) {
+            error_log("no cookie");
+            AccountController::indexAction();
+        } else {
+            $accountCookie = json_decode($_COOKIE["account"], true);
+
+            $view = new View('welcome');
+            $view->addData("accountName", $accountCookie['name']);
+            echo $view->render();
+        }
     }
 
     /**
