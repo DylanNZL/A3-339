@@ -95,4 +95,11 @@ class AccountController extends Controller
 
         $this->indexAction();
     }
+
+    public function logoutAction() {
+        setcookie("account", "", time(), "/");
+
+        $view = new View('login');
+        echo $view->render();
+    }
 }
