@@ -7,17 +7,17 @@
     </div>
     <br>
     <div id="formHolder">
-        <form action="/register" method="POST" id="validate">
+        <form action="/register" onsubmit="validateForm()" method="POST" name="register">
             <div class="form-group row">
                 <label for="name" class="col-sm-4 col-form-label">Name: </label>
                 <div class="col-sm-8">
                     <input type="text" name="name" id="name" placeholder="Name" class="form-control" required>
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row" id="usernameDiv">
                 <label for="username" class="col-sm-4 col-form-label">Username: </label>
                 <div class="col-sm-8">
-                    <input type="text" name="username" id="username" placeholder="Username" class="form-control" required>
+                    <input type="text" name="username" id="username" placeholder="Username" class="form-control"  required>
                 </div>
             </div>
             <div class="form-group row">
@@ -33,6 +33,7 @@
                 </div>
             </div>
             <div class="form-group row">
+                <p id="pwMismatch" class='alert alert-danger' style="display: none">Passwords didn't match</p>
                 <label for="repeat" class="col-sm-4 col-form-label">Password: </label>
                 <div class="col-sm-8">
                     <input type="password" name="repeat" id="repeat" placeholder="Password" class="form-control" required>
@@ -41,8 +42,15 @@
                     </div>
                 </div>
             </div>
-            <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+            <div class="form-group row">
+                <div class="col-sm-offset-6 col-sm-6">
+                    <button type="submit" id="submit" class="btn btn-primary" onclick="return validateForm()">Submit</button>
+                </div>
+            </div>
         </form>
+        <div id="demo">
+
+        </div>
         <?php
             if ($error) { // if exists
                 echo "<p class='alert alert-danger'> $error </p>";
@@ -51,26 +59,56 @@
     </div>
 </div>
 
-<script type="javascript">
-    (function() {
-        window.addEventListener("load", function() {
-            let form = document.getElementById("validate");
-            form.addEventListener("submit", function(event) {
-                if (form.checkValidity() == false) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                }
-                const pw = document.getElementById("password").value;
-                const pw2 = document.getElementById("repeat").value;
-                if (pw !== pw2) {
+<script>
 
-                    event.preventDefault();
-                    event.stopPropagation();
+    let username = document.getElementById('username');
+
+    username.addEventListener("input", function (event) {
+//        console.log(event);
+        checkUserName();
+    });
+
+    function validateForm() {
+        const pw = document.forms['register']['password'].value;
+        const pw2 = document.getElementById("repeat");
+        if (pw !== pw2) {
+            passwordMismatch();
+            return false;
+        } else {
+
+            return true;
+        }
+    }
+
+    function passwordMismatch() {
+        const pwMismatch = document.getElementById('pwMismatch');
+        pwMismatch.display("block");
+
+    }
+
+
+    function checkUserName() {
+//        console.log(username.value);
+        const usernameToCheck = username.value;
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                const data = JSON.parse(this.responseText);
+                console.log(data);
+                const div = document.getElementById('usernameDiv');
+                if (data.valid) {
+                    div.classList.add('has-success');
+                    div.classList.remove('has-error');
+                } else {
+                    div.classList.add('has-error');
+                    div.classList.remove('has-success');
                 }
-                form.classList.add("was-validated");
-            }, false);
-        }, false);
-    }());
+            }
+        };
+        xhttp.open("POST", "/checkUserName", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("username=" + usernameToCheck);
+    }
 </script>
 <?php
     include "footer.phtml"

@@ -1,7 +1,6 @@
 <?php
 namespace agilman\a2\controller;
 
-use agilman\a2\model\AccountCookie;
 use agilman\a2\model\AccountModel;
 use agilman\a2\view\View;
 
@@ -38,9 +37,6 @@ class AccountController extends Controller
      */
     public function loginAction()
     {
-        error_log($_POST['password']);
-        error_log($_POST['username']);
-
         $account = new AccountModel();
         $account = $account->loadFromUsername($_POST['username']);
 
@@ -49,9 +45,12 @@ class AccountController extends Controller
         } else if ($_POST['password'] != $account->getPassword()) {
             return($this->indexActionWithError("Incorrect Password"));
         } else {
-            $accountCookie = array('id' => $account->getId(), 'name' => $account->getName(), 'username' => $account->getUsername(), 'email' => $account->getEmail());
+            $accountCookie = array('id' => $account->getId(),
+                                'name' => $account->getName(),
+                                'username' => $account->getUsername(),
+                                'email' => $account->getEmail());
             setcookie("account", json_encode($accountCookie), time() + (86400 * 30), "/");
-            error_log(json_encode($accountCookie));
+//            error_log(json_encode($accountCookie));
             $view = new View('welcome');
             $view->addData("accountName", $accountCookie['name']);
             echo $view->render();
@@ -84,13 +83,7 @@ class AccountController extends Controller
      */
     public function createAction()
     {
-        error_log($_POST['name']);
-        error_log($_POST['username']);
-        error_log($_POST['email']);
-        error_log($_POST['password']);
-        error_log($_POST['repeat']);
-
-        $account = AccountModel::constructWithVar($_POST['name'], $_POST['username'], $_POST['email'], $_POST['password']);
+        $account = AccountModel::__constructWithVar($_POST['name'], $_POST['username'], $_POST['email'], $_POST['password']);
         $account->save();
 
         $this->indexAction();
@@ -101,5 +94,19 @@ class AccountController extends Controller
 
         $view = new View('login');
         echo $view->render();
+    }
+
+    /**
+     * Checks if the username is taken
+     */
+    public function usernameAction() {
+        error_log($_POST['username']);
+        if ($_POST['username']) {
+            $account = new AccountModel();
+            $check = $account->checkUserName($_POST['username']);
+
+            $arr = array('valid' => $check);
+            echo json_encode($arr);
+        }
     }
 }

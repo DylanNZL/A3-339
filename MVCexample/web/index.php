@@ -111,6 +111,17 @@ $collection->attachRoute(
     )
 );
 
+// Check Username POST
+$collection->attachRoute(
+    new Route(
+        '/checkUserName', array(
+            '_controller' => 'agilman\a2\controller\AccountController::usernameAction',
+            'methods' => 'POST',
+            'name' => 'accountCheckUserName'
+        )
+    )
+);
+
 $router = new Router($collection);
 $router->setBasePath('/');
 

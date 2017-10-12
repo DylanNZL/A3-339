@@ -120,13 +120,21 @@ class AccountModel extends Model
      * =========================================================
      */
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
 
-    function __constructWithVar($name, $username, $email, $password) {
-        $account = $this->__construct();
+    /**
+     * @param $name
+     * @param $username
+     * @param $email
+     * @param $password
+     *
+     * @return AccountModel
+     */
+    public static function  __constructWithVar($name, $username, $email, $password) {
+        $account = new AccountModel();
 
         $account->_name = $name;
         $account->_username = $username;
@@ -184,6 +192,13 @@ class AccountModel extends Model
         $this->_password = $result['password'];
 
         return $this;
+    }
+
+    public function checkUserName($username) {
+        if (!$result = $this->db->query("SELECT * FROM `account` WHERE `username` = '$username';")) {
+            return false;
+        }
+        return true;
     }
 
     /**
