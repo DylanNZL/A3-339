@@ -151,8 +151,9 @@
 
     function isAlphaNumeric(str) {
         let code, i, len;
+        i = 0;
 
-        for (i = 0, len = str.length; i < len; i++) {
+        for (len = str.length; i < len; i++) {
             code = str.charCodeAt(i);
             if (!(code > 47 && code < 58) && // numeric (0-9)
                 !(code > 64 && code < 91) && // upper alpha (A-Z)
@@ -161,6 +162,18 @@
             }
         }
         return true;
+    }
+
+    function hasUpperCase(str) {
+        let code, i, len;
+        i = 0;
+        for (len = str.length; i < len; i++) {
+            code = str.charCodeAt(i);
+            if (code > 64 && code < 91) { //(A-z)
+                return true;
+            }
+        }
+        return false;
     }
 
 </script>
