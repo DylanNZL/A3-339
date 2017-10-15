@@ -42,4 +42,12 @@ class ProductCollectionModel extends Model
         }
         return $products;
     }
+
+    public function search($search) {
+        if (!$result = $this->db->query("SELECT `id` FROM `product` WHERE `name` LIKE '%$search%';")) {
+            // throw new ...
+        }
+        $this->_productIds = array_column($result->fetch_all(), 0);
+        $this->_numbRows = $result->num_rows;
+    }
 }

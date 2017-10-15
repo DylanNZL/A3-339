@@ -133,6 +133,17 @@ $collection->attachRoute(
     )
 );
 
+// Search Products POST
+$collection->attachRoute(
+    new Route(
+        '/search', array(
+            '_controller' => 'agilman\a2\controller\ProductController::searchProductsAction',
+            'methods' => 'POST',
+            'name' => 'productSearchProducts'
+        )
+    )
+);
+
 $router = new Router($collection);
 $router->setBasePath('/');
 

@@ -64,8 +64,42 @@
 
 <script type="text/javascript">
     const searchBar = document.getElementById("search");
+
     function search() {
         console.log(searchBar.value);
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+//                console.log(this.responseText);
+                const data = JSON.parse(this.responseText);
+                console.log(data);
+                loadTable(data);
+            }
+        };
+        xhttp.open("POST", "/search", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("search=" + searchBar.value);
+    }
+
+    function loadTable(data) {
+        let table = document.getElementById('product');
+        let rowCount = table.rows.length;
+        while(--rowCount) { table.deleteRow(rowCount) }
+
+        data.forEach(function (product) {
+//            console.log(product);
+//            console.log(product._sku);
+            let row = table.insertRow();
+
+            let sku = row.insertCell(0);
+            sku.innerHTML = product._sku;
+            let name = row.insertCell(1);
+            name.innerHTML = product._name;
+            let cost = row.insertCell(2);
+            cost.innerHTML = product._cost;
+            let qty = row.insertCell(3);
+            qty.innerHTML = product._stock;
+        })
     }
 </script>
 <?php
