@@ -12,7 +12,7 @@ namespace agilman\a2\model;
  * Class ProductModel
  * @package agilman\a2\model
  */
-class ProductModel extends Model
+class ProductModel extends Model implements \JsonSerializable
 {
     /**
      * @var integer Product ID
@@ -226,4 +226,22 @@ class ProductModel extends Model
         return $this;
     }
 
+    /**
+     * Specify data which should be serialized to JSON
+     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
+     */
+    function jsonSerialize()
+    {
+        return [
+                '_id' => $this->_id,
+                '_sku' => $this->_sku,
+                '_name' => $this->_name,
+                '_category' => $this->_category,
+                '_cost' => $this->_cost,
+                '_stock' => $this->_stock
+        ];
+    }
 }

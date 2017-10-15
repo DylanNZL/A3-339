@@ -91,6 +91,7 @@ class Model
                                           `sku` varchar(256) NOT NULL,
                                           `name` varchar(256) NOT NULL,
                                           `cost` float(8,2) NOT NULL,
+                                          `category` varchar(258) NOT NULL,
                                           `stock` int(8) NOT NULL,
                                           PRIMARY KEY (`id`) );"
             );
@@ -101,11 +102,11 @@ class Model
             }
 
             if(!$this->db->query(
-                "INSERT INTO `product` VALUES (NULL,'ham11', 'Claw Hammer', 39.95, 11),
-                                              (NULL,'ham22', 'Sledge Hammer', 66.00, 2),
-                                              (NULL,'ham23', 'Soft-Face Hammer', 24.99, 7),
-                                              (NULL,'screw03', 'Flat Hammer', 11.95, 25),
-                                              (NULL,'ham22', 'Phillips Hammer', 11.95, 30);"
+                "INSERT INTO `product` VALUES (NULL,'ham11', 'Claw Hammer', 39.95, 'hammers', 11),
+                                              (NULL,'ham22', 'Sledge Hammer', 66.00, 'hammers', 2),
+                                              (NULL,'ham23', 'Soft-Face Hammer', 24.99, 'hammers', 7),
+                                              (NULL,'screw03', 'Flat Hammer', 11.95, 'hammers', 25),
+                                              (NULL,'ham22', 'Phillips Hammer', 11.95, 'hammers', 30);"
 
             )) {
                 // handle appropriately
