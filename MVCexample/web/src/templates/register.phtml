@@ -65,24 +65,30 @@
 
     username.addEventListener("input", function (event) {
 //        console.log(event);
-        checkUserName();
+        if (username.value !== "") {
+            checkUserName();
+            //console.log(username.value)
+        }
     });
 
     function validateForm() {
-        const pw = document.forms['register']['password'].value;
+//        const pw = document.forms['register']['password'].value;
+        const pw1 = document.getElementById("password");
         const pw2 = document.getElementById("repeat");
-        if (pw !== pw2) {
-            passwordMismatch();
+        if (pw1.value !== pw2.value) {
+            //passwordMismatch();
+            console.log("passwords do not match");
             return false;
         } else {
-
+            console.log("passwords match!");
             return true;
         }
     }
 
     function passwordMismatch() {
         const pwMismatch = document.getElementById('pwMismatch');
-        pwMismatch.display("block");
+        //pwMismatch.display("block");
+        console.log("passwords do not match");
 
     }
 

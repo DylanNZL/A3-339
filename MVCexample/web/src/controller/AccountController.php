@@ -101,12 +101,14 @@ class AccountController extends Controller
      */
     public function usernameAction() {
         error_log($_POST['username']);
-        if ($_POST['username']) {
-            $account = new AccountModel();
-            $check = $account->checkUserName($_POST['username']);
+        if ($_POST['username'] != null && $_POST['username'] != "") {
+            if ($_POST['username']) {
+                $account = new AccountModel();
+                $check = $account->checkUserName($_POST['username']);
 
-            $arr = array('valid' => $check);
-            echo json_encode($arr);
+                $arr = array('valid' => $check);
+                echo json_encode($arr);
+            }
         }
     }
 }

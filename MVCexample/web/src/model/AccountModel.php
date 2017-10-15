@@ -195,10 +195,18 @@ class AccountModel extends Model
     }
 
     public function checkUserName($username) {
-        if (!$result = $this->db->query("SELECT * FROM `account` WHERE `username` = '$username';")) {
+//        if (!$result = $this->db->query("SELECT * FROM `account` WHERE `username` = '$username';")) {
+//            return false;
+//        }
+//        return true;
+        $result = $this->db->query("SELECT 1 FROM `account` WHERE `username` = '$username';");
+        if (mysqli_num_rows($result) > 0) {
             return false;
         }
-        return true;
+        else {
+            return true;
+        }
+
     }
 
     /**
