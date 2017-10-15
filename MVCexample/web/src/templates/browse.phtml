@@ -64,7 +64,7 @@
                     <th>Stock Qty</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="productBody">
 
                 </tbody>
             </table>
@@ -101,6 +101,9 @@
 
     function loadTable(data) {
         let table = document.getElementById('product');
+        let rowCount = table.rows.length;
+        while(--rowCount) { table.deleteRow(rowCount) }
+
         data.forEach(function (product) {
 //            console.log(product);
 //            console.log(product._sku);
