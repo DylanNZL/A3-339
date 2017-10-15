@@ -95,7 +95,7 @@ class ProductController
     public function searchProductsAction() {
         error_log('sp post: ' . $_POST['search']);
 
-        if ($_POST['search'] == null) {
+        if ($_POST['search'] == null || $_POST['search'] == "") {
             return;
         }
 
