@@ -33,14 +33,13 @@
                 </div>
             </div>
             <div class="form-group row">
-                <p id="pwMismatch" class='alert alert-danger' style="display: none">Passwords didn't match</p>
                 <label for="repeat" class="col-sm-4 col-form-label">Password: </label>
                 <div class="col-sm-8">
-                    <input type="password" name="repeat" id="repeat" placeholder="Password" class="form-control" required>
-                    <div class="invalid-feedback">
-                        <p>Password doesn't match</p>
-                    </div>
+                    <input type="password" name="repeat" id="repeat" placeholder="Password" class="form-control" oninput="checkPasswords()" required>
+                    <p id="errorNotification" class='alert alert-danger' style="display: none; position: absolute;"></p>
+
                 </div>
+
             </div>
             <div class="form-group row">
                 <div class="col-sm-offset-6 col-sm-6">
@@ -49,6 +48,7 @@
             </div>
         </form>
         <div id="demo">
+            <br>
 
         </div>
         <?php
@@ -62,6 +62,11 @@
 <script>
 
     let username = document.getElementById('username');
+    let validUsername = true;
+    let usernameError = "";
+    let passwordError = "";
+
+    let errorNotification = document.getElementById('errorNotification');
 
     username.addEventListener("input", function (event) {
 //        console.log(event);
@@ -72,26 +77,35 @@
     });
 
     function validateForm() {
-//        const pw = document.forms['register']['password'].value;
         const pw1 = document.getElementById("password");
         const pw2 = document.getElementById("repeat");
         if (pw1.value !== pw2.value) {
-            //passwordMismatch();
-            console.log("passwords do not match");
+            //console.log("passwords do not match");
             return false;
         } else {
-            console.log("passwords match!");
+            //console.log("passwords match!");
             return true;
         }
     }
 
-    function passwordMismatch() {
-        const pwMismatch = document.getElementById('pwMismatch');
-        //pwMismatch.display("block");
-        console.log("passwords do not match");
-
+    function checkPasswords() {
+        const pw1 = document.getElementById("password");
+        const pw2 = document.getElementById("repeat");
+        if (pw1.value !== pw2.value) {
+            errorNotification.style.display = "initial";
+            passwordError = "Passwords Do Not Match";
+            errorNotification.innerHTML = usernameError + passwordError;
+            console.log("passwords do not match");
+            disableSubmit();
+        } else {
+            if (usernameError === "") {
+                errorNotification.style.display = "none";
+            } else {
+                errorNotification.innerHTML = usernameError;
+            }
+            enableSubmit();
+        }
     }
-
 
     function checkUserName() {
 //        console.log(username.value);
@@ -101,19 +115,35 @@
             if (this.readyState === 4 && this.status === 200) {
                 const data = JSON.parse(this.responseText);
                 console.log(data);
-                const div = document.getElementById('usernameDiv');
-                if (data.valid) {
-                    div.classList.add('has-success');
-                    div.classList.remove('has-error');
+                validUsername = data.valid;
+                console.log(validUsername);
+
+                if (!validUsername) {
+                    usernameError = "Invalid Username<br>";
+                    errorNotification.style.display = "initial";
+                    errorNotification.innerHTML = usernameError + passwordError;
+                    disableSubmit();
                 } else {
-                    div.classList.add('has-error');
-                    div.classList.remove('has-success');
+                    usernameError = "";
+                    if (passwordError === "") { errorNotification.style.display = "none" }
+                    else { errorNotification.innerHTML = passwordError; }
+
+                    enableSubmit();
                 }
             }
         };
         xhttp.open("POST", "/checkUserName", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send("username=" + usernameToCheck);
+
+    }
+
+    function disableSubmit() {
+
+    }
+
+    function enableSubmit() {
+
     }
 </script>
 <?php
