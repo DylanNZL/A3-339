@@ -17,7 +17,7 @@
             <div class="form-group row" id="usernameDiv">
                 <label for="username" class="col-sm-4 col-form-label">Username: </label>
                 <div class="col-sm-8">
-                    <input type="text" name="username" id="username" placeholder="Username" class="form-control"  required>
+                    <input type="text" name="username" id="username" placeholder="Username" class="form-control" oninput="usernameCheck()" required>
                 </div>
             </div>
             <div class="form-group row">
@@ -71,14 +71,6 @@
 
     let errorNotification = document.getElementById('errorNotification');
 
-    username.addEventListener("input", function (event) {
-//        console.log(event);
-        if (username.value !== "") {
-            checkUserName();
-            //console.log(username.value)
-        }
-    });
-
 
     function checkPasswords() {
         const pw1 = document.getElementById("password");
@@ -107,18 +99,25 @@
         }
     }
 
-    function checkUserName() {
+    function usernameCheck() {
         const usernameToCheck = username.value;
         let xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
                 const data = JSON.parse(this.responseText);
-                console.log(data);
                 validUsername = data.valid;
-                console.log(validUsername);
+
+                if (!isAlphaNumeric(usernameToCheck)) {
+                    usernameError = "Username Can Only Contain Numbers and Letters<br>";
+                    disableSubmit();
+                    return
+                } else {
+                    usernameError = "";
+                    enableSubmit();
+                }
 
                 if (!validUsername) {
-                    usernameError = "Invalid Username<br>";
+                    usernameError = "Username Already Exists<br>";
                     disableSubmit();
                 } else {
                     usernameError = "";
@@ -149,6 +148,21 @@
         }
 
     }
+
+    function isAlphaNumeric(str) {
+        let code, i, len;
+
+        for (i = 0, len = str.length; i < len; i++) {
+            code = str.charCodeAt(i);
+            if (!(code > 47 && code < 58) && // numeric (0-9)
+                !(code > 64 && code < 91) && // upper alpha (A-Z)
+                !(code > 96 && code < 123)) { // lower alpha (a-z)
+                return false;
+            }
+        }
+        return true;
+    }
+
 </script>
 <?php
     include "footer.phtml"
