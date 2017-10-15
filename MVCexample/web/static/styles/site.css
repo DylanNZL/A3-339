@@ -18,12 +18,20 @@ body {
 /*
  * Browse Page
  */
-
-#search {
-    height:400px;
+#content {
+    height: 720px;
+}
+#sideBar {
+    height: 720px;
+}
+#productTable{
+    height:650px;
     overflow-y: auto;
 }
 
-footer {
+#navBtns {
+    float: right;
+}
 
+footer {
 }

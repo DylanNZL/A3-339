@@ -27,23 +27,35 @@
         </nav>
     </div>
 
-    <div id="content">
-        <div id="sideBar">
+    <div id="content" class="row">
+        <div id="sideBar" class="col-sm-2">
             <form id="filter">
                 <h3>Filter:</h3>
-                <input type="checkbox" name="inStockOnly" value="In stock only">
-
+                <br>
+                <div class="checkbox">
+                    <label><input type="checkbox" name="inStockOnly" value="InStockOnly"> In-Stock Only</label>
+                </div>
+                <br>
                 <h6>Show only:</h6>
-                <input type="checkbox" name="hammers" value="Hammers">
-                <input type="checkbox" name="heatGuns" value="Heat Guns">
-                <input type="checkbox" name="pliers" value="Pliers">
-                <input type="checkbox" name="screwdrivers" value="Screwdrivers">
+                <div class="checkbox">
+                    <label><input type="checkbox" name="hammers" value="Hammers"> Hammers</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" name="heatGuns" value="Heat Guns"> Heat Guns</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" name="pliers" value="Pliers"> Pliers</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" name="screwdrivers" value="Screwdrivers"> Screwdrivers</label>
+                </div>
             </form>
         </div>
 
-        <div id="search">
+        <div id="search" class="col-sm-10">
             <h3>Available Products:</h3>
-            <table id="product">
+            <div id="productTable">
+            <table id="product" class="table">
                 <thead>
                 <tr>
                     <th>SKU</th>
@@ -56,12 +68,23 @@
 
                 </tbody>
             </table>
+            </div>
+            <div id="navBtns">
+                <button type="submit" id="back" class="btn btn-primary" onclick="return backProducts()">Back</button>
+                <button type="submit" id="next" class="btn btn-primary" onclick="return nextProducts()">Next</button>
+            </div>
         </div>
     </div>
 </div>
 
 <script type="text/javascript">
+    let current;
     window.onload = function() {
+        current = 0;
+        getTableData();
+    };
+
+    function getTableData() {
         let xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
@@ -73,18 +96,16 @@
         };
         xhttp.open("POST", "/products", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("current=" + 0);
-    };
-
+        xhttp.send("current=" + current);
+    }
 
     function loadTable(data) {
         let table = document.getElementById('product');
         data.forEach(function (product) {
-            console.log(product);
-            console.log(product._sku);
-
-
+//            console.log(product);
+//            console.log(product._sku);
             let row = table.insertRow();
+
             let sku = row.insertCell(0);
             sku.innerHTML = product._sku;
             let name = row.insertCell(1);
@@ -93,9 +114,17 @@
             cost.innerHTML = product._cost;
             let qty = row.insertCell(3);
             qty.innerHTML = product._stock;
-
         })
+    }
 
+    function nextProducts() {
+        current += 20;
+        getTableData();
+    }
+
+    function backProducts() {
+        if (current !== 0) current -= 20;
+        getTableData();
     }
 </script>
 <?php
