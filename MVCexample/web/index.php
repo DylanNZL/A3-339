@@ -122,6 +122,17 @@ $collection->attachRoute(
     )
 );
 
+// Get Products POST
+$collection->attachRoute(
+    new Route(
+        '/products', array(
+            '_controller' => 'agilman\a2\controller\ProductController::productAction',
+            'methods' => 'POST',
+            'name' => 'productGetProducts'
+        )
+    )
+);
+
 $router = new Router($collection);
 $router->setBasePath('/');
 

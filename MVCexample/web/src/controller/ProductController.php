@@ -8,6 +8,8 @@
 
 namespace agilman\a2\controller;
 
+use agilman\a2\model\ProductCollectionModel;
+use agilman\a2\model\ProductModel;
 use agilman\a2\view\View;
 
 /**
@@ -72,6 +74,22 @@ class ProductController
         $view = new View('search');
         $view->addData("error", $error);
         echo $view->render();
+    }
+
+    /**
+     *
+     */
+    public function productAction() {
+        error_log("pa post " . $_POST['current']);
+        if ($_POST['current'] == null || is_numeric($_POST['current'])) {
+            $current = 0;
+        } else {
+            $current = $_POST['current'];
+        }
+        $productCollectionModel = new ProductCollectionModel();
+        $products = $productCollectionModel->getProductsBetween($current, $current + 20);
+
+        echo json_encode($products);
     }
 
 }

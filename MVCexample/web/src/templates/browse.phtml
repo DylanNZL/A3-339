@@ -43,7 +43,7 @@
 
         <div id="search">
             <h3>Available Products:</h3>
-            <table>
+            <table id="product">
                 <thead>
                 <tr>
                     <th>SKU</th>
@@ -53,20 +53,50 @@
                 </tr>
                 </thead>
                 <tbody>
-                <?php
-                if ($items) { // check it exists
-                    foreach ($items as $item) {
-                        echo $item->printRow();
-                    }
-                }
-                ?>
+
                 </tbody>
             </table>
         </div>
     </div>
 </div>
 
-<script type="javascript">
+<script type="text/javascript">
+    window.onload = function() {
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+//                console.log(this.responseText);
+                const data = JSON.parse(this.responseText);
+//                console.log(data);
+                loadTable(data);
+            }
+        };
+        xhttp.open("POST", "/products", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("current=" + 0);
+    };
+
+
+    function loadTable(data) {
+        let table = document.getElementById('product');
+        data.forEach(function (product) {
+            console.log(product);
+            console.log(product._sku);
+
+
+            let row = table.insertRow();
+            let sku = row.insertCell(0);
+            sku.innerHTML = product._sku;
+            let name = row.insertCell(1);
+            name.innerHTML = product._name;
+            let cost = row.insertCell(2);
+            cost.innerHTML = product._cost;
+            let qty = row.insertCell(3);
+            qty.innerHTML = product._stock;
+
+        })
+
+    }
 </script>
 <?php
     include "footer.phtml"

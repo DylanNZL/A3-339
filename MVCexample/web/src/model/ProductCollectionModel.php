@@ -29,15 +29,17 @@ class ProductCollectionModel extends Model
      * @param $min
      * @param $max
      *
-     * @return \Generator ProductModel[]
+     * @return
      */
     public function getProductsBetween($min, $max)
     {
+        $products = array();
         foreach ($this->_productIds as $id) {
-            if ($id <= $min && $id >= $max)
-            // Use a generator to save on memory/resources
-            // load accounts from DB one at a time only when required
-            yield (new ProductModel())->load($id);
+//            if ($id >= $min && $id <= $max) {
+                $product = (new ProductModel())->load($id);
+                array_push($products, $product);
+//            }
         }
+        return $products;
     }
 }
