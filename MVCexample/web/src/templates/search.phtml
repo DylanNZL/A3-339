@@ -64,8 +64,21 @@
 
 <script type="text/javascript">
     const searchBar = document.getElementById("search");
+
     function search() {
         console.log(searchBar.value);
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                console.log(this.responseText);
+//                const data = JSON.parse(this.responseText);
+//                console.log(data);
+
+            }
+        };
+        xhttp.open("POST", "/search", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("search=" + searchBar.value);
     }
 </script>
 <?php

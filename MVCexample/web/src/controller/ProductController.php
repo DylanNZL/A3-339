@@ -80,7 +80,7 @@ class ProductController
      *
      */
     public function productAction() {
-        error_log("pa post " . $_POST['current']);
+        error_log($_POST['current']);
         if ($_POST['current'] == null || is_numeric($_POST['current'])) {
             $current = 0;
         } else {
@@ -88,6 +88,20 @@ class ProductController
         }
         $productCollectionModel = new ProductCollectionModel();
         $products = $productCollectionModel->getProductsBetween($current, $current + 20);
+
+        echo json_encode($products);
+    }
+
+    public function searchProductsAction() {
+        error_log('sp post: ' . $_POST['search']);
+
+        if ($_POST['search'] == null) {
+            return;
+        }
+
+        $productCollectionModel = new ProductCollectionModel();
+        $productCollectionModel->search($_POST['search']);
+        $products = $productCollectionModel->getProductsBetween(0,20);
 
         echo json_encode($products);
     }
