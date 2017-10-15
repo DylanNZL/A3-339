@@ -65,7 +65,10 @@
 
     username.addEventListener("input", function (event) {
 //        console.log(event);
-        checkUserName();
+        if (username.value !== "") {
+            checkUserName();
+            console.log(username.value)
+        }
     });
 
     function validateForm() {
