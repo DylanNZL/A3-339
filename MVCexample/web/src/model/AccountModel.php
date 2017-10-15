@@ -199,6 +199,7 @@ class AccountModel extends Model
 //            return false;
 //        }
 //        return true;
+
         $result = $this->db->query("SELECT 1 FROM `account` WHERE `username` = '$username';");
         if (mysqli_num_rows($result) > 0) {
             return false;
@@ -218,7 +219,7 @@ class AccountModel extends Model
     {
         if (!isset($this->_id)) {
             // New account - Perform INSERT
-            if (!$result = $this->db->query("INSERT INTO `account` VALUES (NULL,'$this->_name', ' $this->_username', '$this->_email', '$this->_password');")) {
+            if (!$result = $this->db->query("INSERT INTO `account` VALUES (NULL,'$this->_name', '$this->_username', '$this->_email', '$this->_password');")) {
                 // throw new ...
             }
             $this->_id = $this->db->insert_id;

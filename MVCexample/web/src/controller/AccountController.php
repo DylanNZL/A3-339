@@ -40,6 +40,9 @@ class AccountController extends Controller
         $account = new AccountModel();
         $account = $account->loadFromUsername($_POST['username']);
 
+
+        error_log($account->getId());
+
         if ($account->getId() == null) {
             return($this->indexActionWithError("That username doesn't exist"));
         } else if ($_POST['password'] != $account->getPassword()) {
