@@ -80,13 +80,36 @@ class ProductController
      *
      */
     public function productAction() {
-        error_log($_POST['current']);
+//        error_log($_POST['current']);
         if ($_POST['current'] == null || is_numeric($_POST['current'])) {
             $current = 0;
         } else {
             $current = $_POST['current'];
         }
+
         $productCollectionModel = new ProductCollectionModel();
+        error_log($_POST['inStockOnly']);
+
+        // In Stock
+        if ($_POST['inStockOnly'] != null) {
+            //TODO:
+        }
+
+        // Category filters
+        // TODO:
+        if ($_POST ['hammers'] != null) {
+
+        }
+        if ($_POST['heatGuns'] != null) {
+
+        }
+        if ($_POST['pliers'] != null) {
+
+        }
+        if ($_POST['screwdrivers'] != null) {
+
+        }
+
         $products = $productCollectionModel->getProductsBetween($current, $current + 20);
 
         echo json_encode($products);

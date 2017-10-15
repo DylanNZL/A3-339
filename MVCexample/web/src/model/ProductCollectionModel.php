@@ -29,22 +29,23 @@ class ProductCollectionModel extends Model
      * @param $min
      * @param $max
      *
-     * @return
+     * @return array of ProductModel
      */
     public function getProductsBetween($min, $max)
     {
+        error_log($min . " "  . $max);
         $products = array();
         foreach ($this->_productIds as $id) {
-//            if ($id >= $min && $id <= $max) {
+            if ($id >= $min && $id <= $max) {
                 $product = (new ProductModel())->load($id);
                 array_push($products, $product);
-//            }
+            }
         }
         return $products;
     }
 
     public function search($search) {
-        if (!$result = $this->db->query("SELECT `id` FROM `product` WHERE `name` LIKE '%$search%';")) {
+        if (!$result = $this->db->query("SELECT `id` FROM `product` WHERE UPPER(`name`) LIKE UPPER('%$search%');")) {
             // throw new ...
         }
         $this->_productIds = array_column($result->fetch_all(), 0);

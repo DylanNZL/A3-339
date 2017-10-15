@@ -33,21 +33,21 @@
                 <h3>Filter:</h3>
                 <br>
                 <div class="checkbox">
-                    <label><input type="checkbox" name="inStockOnly" value="InStockOnly"> In-Stock Only</label>
+                    <label><input type="checkbox" id="inStockOnly" name="inStockOnly" value="InStockOnly" onclick="changeInStockOnly()"> In-Stock Only</label>
                 </div>
                 <br>
                 <h6>Show only:</h6>
                 <div class="checkbox">
-                    <label><input type="checkbox" name="hammers" value="Hammers"> Hammers</label>
+                    <label><input type="checkbox" id="hammers" name="hammers" value="Hammers" onclick="changeHammers()"> Hammers</label>
                 </div>
                 <div class="checkbox">
-                    <label><input type="checkbox" name="heatGuns" value="Heat Guns"> Heat Guns</label>
+                    <label><input type="checkbox" id="heatGuns" name="heatGuns" value="Heat Guns" onclick="changeHeatGuns()"> Heat Guns</label>
                 </div>
                 <div class="checkbox">
-                    <label><input type="checkbox" name="pliers" value="Pliers"> Pliers</label>
+                    <label><input type="checkbox" id="pliers" name="pliers" value="Pliers" onclick="changePliers()"> Pliers</label>
                 </div>
                 <div class="checkbox">
-                    <label><input type="checkbox" name="screwdrivers" value="Screwdrivers"> Screwdrivers</label>
+                    <label><input type="checkbox" id="screwdrivers" name="screwdrivers" value="Screwdrivers" onclick="changeScrewdrivers()"> Screwdrivers</label>
                 </div>
             </form>
         </div>
@@ -78,6 +78,31 @@
 </div>
 
 <script type="text/javascript">
+    let filterOptions = {
+        inStockOnly : false,
+        hammers : false,
+        heatGuns : false,
+        pliers : false,
+        screwdrivers : false,
+        getFilters : function() {
+            let filters = "";
+            if (this.inStockOnly) filters += "&inStockOnly=true";
+            if (this.hammers) filters += "&hammers=true";
+            if (this.heatGuns) filters += "&heatGuns=true";
+            if (this.pliers) filters += "&pliers=true";
+            if (this.screwdrivers) filters += "&screwdrivers=true";
+            return filters;
+        },
+        anyFilters : function () {
+            if (this.inStockOnly) return true;
+            if (this.hammers) return true;
+            if (this.heatGuns) return true;
+            if (this.pliers) return true;
+            if (this.screwdrivers) return true;
+            return false;
+        }
+    };
+
     let current;
     window.onload = function() {
         current = 0;
@@ -85,6 +110,8 @@
     };
 
     function getTableData() {
+        console.log(filterOptions);
+
         let xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
@@ -96,7 +123,11 @@
         };
         xhttp.open("POST", "/products", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("current=" + current);
+        if (filterOptions.anyFilters()) {
+            xhttp.send("current=" + current + filterOptions.getFilters());
+        } else {
+            xhttp.send("current=" + current);
+        }
     }
 
     function loadTable(data) {
@@ -118,6 +149,36 @@
             let qty = row.insertCell(3);
             qty.innerHTML = product._stock;
         })
+    }
+
+    function changeInStockOnly() {
+        const inStockOnlyCbx = document.getElementById('inStockOnly');
+        filterOptions.inStockOnly = inStockOnlyCbx.checked;
+        getTableData();
+    }
+
+    function changeHammers() {
+        const hammersCbx = document.getElementById('hammers');
+        filterOptions.hammers = hammersCbx.checked;
+        getTableData();
+    }
+
+    function changeHeatGuns() {
+        const heatGunsCbx = document.getElementById('heatGuns');
+        filterOptions.heatGuns = heatGunsCbx.checked;
+        getTableData();
+    }
+
+    function changePliers() {
+        const pliersCbx = document.getElementById('pliers');
+        filterOptions.inStockOnly = pliersCbx.checked;
+        getTableData();
+    }
+
+    function changeScrewdrivers() {
+        const screwdriversCbx = document.getElementById('screwdrivers');
+        filterOptions.screwdrivers = screwdriversCbx.checked;
+        getTableData();
     }
 
     function nextProducts() {
