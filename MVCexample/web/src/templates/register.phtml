@@ -29,7 +29,7 @@
             <div class="form-group row">
                 <label for="password" class="col-sm-4 col-form-label">Password: </label>
                 <div class="col-sm-8">
-                    <input type="password" name="password" id="password" placeholder="Password" class="form-control" required>
+                    <input type="password" name="password" id="password" placeholder="Password" class="form-control" oninput="passwordLength()" required>
                 </div>
             </div>
             <div class="form-group row">
@@ -43,7 +43,7 @@
             </div>
             <div class="form-group row">
                 <div class="col-sm-offset-6 col-sm-6">
-                    <button type="submit" id="submit" class="btn btn-primary" onclick="return validateForm()">Submit</button>
+                    <button type="submit" id="submit" class="btn btn-primary">Submit</button>
                 </div>
             </div>
         </form>
@@ -64,7 +64,8 @@
     let username = document.getElementById('username');
     let validUsername = true;
     let usernameError = "";
-    let passwordError = "";
+    let passwordMatchError = "";
+    let passwordLengthError = "";
 
     const bSubmit = document.getElementById('submit');
 
@@ -78,40 +79,35 @@
         }
     });
 
-    function validateForm() {
-        const pw1 = document.getElementById("password");
-        const pw2 = document.getElementById("repeat");
-        if (pw1.value !== pw2.value) {
-            //console.log("passwords do not match");
-            return false;
-        } else {
-            //console.log("passwords match!");
-            return true;
-        }
-    }
 
     function checkPasswords() {
         const pw1 = document.getElementById("password");
         const pw2 = document.getElementById("repeat");
         if (pw1.value !== pw2.value) {
-            errorNotification.style.display = "initial";
-            passwordError = "Passwords Do Not Match";
-            errorNotification.innerHTML = usernameError + passwordError;
-            console.log("passwords do not match");
+            passwordMatchError = "Passwords Do Not Match";
             disableSubmit();
         } else {
-            passwordError = "";
-            if (usernameError === "") {
-                errorNotification.style.display = "none";
-            } else {
-                errorNotification.innerHTML = usernameError;
-            }
+            passwordMatchError = "";
+            enableSubmit();
+        }
+    }
+
+
+    function passwordLength() {
+        checkPasswords();
+        const pw = document.getElementById("password");
+        if (pw.value.length < 7 || pw.value.length > 15) {
+            passwordLengthError = "Passwords Must Be Between 7 and 15 Characters Long<br>";
+            disableSubmit();
+            console.log("password error: " + passwordLengthError);
+        } else {
+            passwordLengthError = "";
+            console.log("password error: " + passwordLengthError);
             enableSubmit();
         }
     }
 
     function checkUserName() {
-//        console.log(username.value);
         const usernameToCheck = username.value;
         let xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
@@ -123,14 +119,9 @@
 
                 if (!validUsername) {
                     usernameError = "Invalid Username<br>";
-                    errorNotification.style.display = "initial";
-                    errorNotification.innerHTML = usernameError + passwordError;
                     disableSubmit();
                 } else {
                     usernameError = "";
-                    if (passwordError === "") { errorNotification.style.display = "none" }
-                    else { errorNotification.innerHTML = passwordError; }
-
                     enableSubmit();
                 }
             }
@@ -142,13 +133,19 @@
     }
 
     function disableSubmit() {
-        bSubmit.disabled = true;
+        if (passwordLengthError !== "" || passwordMatchError !== "" || usernameError !== "") {
+            bSubmit.disabled = true;
+            errorNotification.style.display = "initial";
+            errorNotification.innerHTML = usernameError + passwordLengthError + passwordMatchError;
+
+        }
 
     }
 
     function enableSubmit() {
-        if ((usernameError === "") && (passwordError === "")) {
+        if ((usernameError === "") && (passwordMatchError === "") && (passwordLengthError === "")) {
             bSubmit.disabled = false;
+            errorNotification.style.display = "none";
         }
 
     }
