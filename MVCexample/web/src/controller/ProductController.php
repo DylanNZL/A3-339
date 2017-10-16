@@ -106,7 +106,7 @@ class ProductController
      * The client side compiles the number and sends it
      */
     private function getFilters($filterInt) {
-//        error_log("Filter Int = " . $filterInt);
+        error_log("Filter Int = " . $filterInt);
         switch ($filterInt) {
             case 1:
                 return "WHERE `category` = 'hammers'";
@@ -136,7 +136,7 @@ class ProductController
                 return "WHERE `category` = 'hammers' OR`category` = 'saws' OR `category` = 'pliers' OR `category` = 'screwdrivers'";
 
             case 9:
-                return  "WHERE `stock' > 0";
+                return  "WHERE `stock` > 0";
             case 91:
                 return "WHERE `category` = 'hammers' AND `stock` > 0";
             case 92:

@@ -87,17 +87,18 @@
         getFilters : function() {
             let filters = "&filters=";
             if (this.inStockOnly) {
-                if (this.hammers) filters += "1";
-                if (this.saws) filters +="2";
-                if (this.pliers) filters += "3";
-                if (this.screwdrivers) filters += "4";
-            } else {
                 filters += "9";
                 if (this.hammers) filters += "1";
                 if (this.saws) filters +="2";
                 if (this.pliers) filters += "3";
                 if (this.screwdrivers) filters += "4";
+            } else {
+                if (this.hammers) filters += "1";
+                if (this.saws) filters +="2";
+                if (this.pliers) filters += "3";
+                if (this.screwdrivers) filters += "4";
             }
+            console.log("FilterInt = " + filters);
             return filters;
         },
         anyFilters : function () {
@@ -178,7 +179,7 @@
 
     function changePliers() {
         const pliersCbx = document.getElementById('pliers');
-        filterOptions.inStockOnly = pliersCbx.checked;
+        filterOptions.pliers = pliersCbx.checked;
         getTableData();
     }
 

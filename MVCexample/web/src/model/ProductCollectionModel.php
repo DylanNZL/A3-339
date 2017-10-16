@@ -35,8 +35,9 @@ class ProductCollectionModel extends Model
     {
         error_log($min . " "  . $max);
         $products = array();
+        $i = 0;
         foreach ($this->_productIds as $id) {
-            if ($id >= $min && $id <= $max) {
+            if ($i >= $min && $i <= $max) {
                 $product = (new ProductModel())->load($id);
                 array_push($products, $product);
             }
@@ -54,7 +55,9 @@ class ProductCollectionModel extends Model
     }
 
     public function search($search) {
-        if (!$result = $this->db->query("SELECT `id` FROM `product` WHERE UPPER(`name`) LIKE UPPER('%$search%');")) {
+        $query = "SELECT `id` FROM `product` WHERE UPPER(`name`) LIKE UPPER('%$search%');";
+        error_log($query);
+        if (!$result = $this->db->query($query)) {
             // throw new ...
         }
         $this->_productIds = array_column($result->fetch_all(), 0);
@@ -62,7 +65,9 @@ class ProductCollectionModel extends Model
     }
 
     public function filter($filter) {
-        if (!$result = $this->db->query("SELECT `id` FROM `product` $filter;")) {
+        $query = "SELECT `id` FROM `product` $filter;";
+        error_log($query);
+        if (!$result = $this->db->query($query)) {
             // throw new ...
         }
         $this->_productIds = array_column($result->fetch_all(), 0);
