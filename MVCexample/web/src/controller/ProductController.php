@@ -91,28 +91,98 @@ class ProductController
         error_log($_POST['inStockOnly']);
 
         // In Stock
-        if ($_POST['inStockOnly'] != null) {
-            //TODO:
+        if ($_POST['filters'] != null && is_numeric($_POST['filters'])) {
+            $filter = $this->getFilters($_POST['filters']);
         }
-
-        // Category filters
-        // TODO:
-        if ($_POST ['hammers'] != null) {
-
+        if ($filter !== -1) {
+            $productCollectionModel->filter($filter);
+            $products = $productCollectionModel->getProductsBetween($current, $current + 20);
+        } else {
+            $products = $productCollectionModel->getProductsBetween($current, $current + 20);
         }
-        if ($_POST['heatGuns'] != null) {
-
-        }
-        if ($_POST['pliers'] != null) {
-
-        }
-        if ($_POST['screwdrivers'] != null) {
-
-        }
-
-        $products = $productCollectionModel->getProductsBetween($current, $current + 20);
 
         echo json_encode($products);
+    }
+
+    /**
+     * @param  int $filterInt
+     * @return int|string
+     *
+     * Takes the number given by the filter int and returns the corresponding filter
+     *
+     * Category numbers:
+     *      1 = hammers
+     *      2 = heat guns
+     *      3 = pliers
+     *      4 = screwdrivers
+     *
+     *      9 = In Stock Only
+     *
+     * The client side compiles the number and sends it
+     */
+    private function getFilters($filterInt) {
+        error_log("Filter Int = " . $filterInt);
+        switch ($filterInt) {
+            case 1:
+                return "WHERE `category` = 'hammers'";
+            case 2:
+                return "WHERE `category` = 'heat guns'";
+            case 3:
+                return "WHERE `category` = 'pliers'";
+            case 4:
+                return "WHERE `category` = 'screwdrivers'";
+            case 12:
+                return "WHERE `category` = 'hammers' OR `category` = 'heat guns'";
+            case 13:
+                return "WHERE `category` = 'hammers' OR`category` = 'pliers'";
+            case 14:
+                return "WHERE `category` = 'hammers' OR`category` = 'screwdrivers'";
+            case 23:
+                return "WHERE `category` = 'heat guns' OR`category` = 'pliers'";
+            case 24:
+                return "WHERE `category` = 'heat guns' OR`category` = 'screwdrivers'";
+            case 34:
+                return "WHERE `category` = 'pliers' OR`category` = 'screwdrivers'";
+            case 123:
+                return "WHERE `category` = 'hammers' OR`category` = 'heat guns' OR `category` = 'pliers'";
+            case 234:
+                return "WHERE `category` = 'heat guns' OR `category` = 'pliers' OR `category` = 'screwdrivers'";
+            case 1234:
+                return "WHERE `category` = 'hammers' OR`category` = 'heat guns' OR `category` = 'pliers' OR `category` = 'screwdrivers'";
+
+            case 9:
+                return  "where `stock' > 0";
+            case 91:
+                return "WHERE `category` = 'hammers' AND `stock` > 0";
+            case 92:
+                return "WHERE `category` = 'heat guns' AND `stock` > 0";
+            case 93:
+                return "WHERE `category` = 'pliers' AND `stock` > 0";
+            case 94:
+                return "WHERE `category` = 'screwdrivers' AND `stock` > 0";
+            case 912:
+                return "WHERE `category` = 'hammers' AND `stock` > 0 OR `category` = 'heat guns' AND `stock` > 0";
+            case 913:
+                return "WHERE `category` = 'hammers' AND `stock` > 0 OR`category` = 'pliers' AND `stock` > 0";
+            case 914:
+                return "WHERE `category` = 'hammers' AND `stock` > 0 OR`category` = 'screwdrivers' AND `stock` > 0";
+            case 923:
+                return "WHERE `category` = 'heat guns' AND `stock` > 0 OR`category` = 'pliers' AND `stock` > 0";
+            case 924:
+                return "WHERE `category` = 'heat guns' AND `stock` > 0 OR`category` = 'screwdrivers' AND `stock` > 0";
+            case 934:
+                return "WHERE `category` = 'pliers' AND `stock` > 0 OR`category` = 'screwdrivers' AND `stock` > 0";
+            case 9123:
+                return "WHERE `category` = 'hammers' AND `stock` > 0 OR`category` = 'heat guns' AND `stock` > 0 OR `category` = 'pliers' AND `stock` > 0";
+            case 9234:
+                return "WHERE `category` = 'heat guns' AND `stock` > 0 OR `category` = 'pliers' AND `stock` > 0 OR `category` = 'screwdrivers' AND `stock` > 0";
+            case 91234:
+                return "WHERE `category` = 'hammers' AND `stock` > 0 OR`category` = 'heat guns' AND `stock` > 0 OR `category` = 'pliers' AND `stock` > 0 OR `category` = 'screwdrivers' AND `stock` > 0";
+
+            default:
+                return -1;
+        }
+
     }
 
     public function searchProductsAction() {

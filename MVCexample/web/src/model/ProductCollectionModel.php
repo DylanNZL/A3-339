@@ -51,4 +51,12 @@ class ProductCollectionModel extends Model
         $this->_productIds = array_column($result->fetch_all(), 0);
         $this->_numbRows = $result->num_rows;
     }
+
+    public function filter($filter) {
+        if (!$result = $this->db->query("SELECT `id` FROM `product` $filter;")) {
+            // throw new ...
+        }
+        $this->_productIds = array_column($result->fetch_all(), 0);
+        $this->_numbRows = $result->num_rows;
+    }
 }
