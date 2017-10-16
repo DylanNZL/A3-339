@@ -41,7 +41,7 @@
                     <label><input type="checkbox" id="hammers" name="hammers" value="Hammers" onclick="changeHammers()"> Hammers</label>
                 </div>
                 <div class="checkbox">
-                    <label><input type="checkbox" id="heatGuns" name="heatGuns" value="Heat Guns" onclick="changeHeatGuns()"> Heat Guns</label>
+                    <label><input type="checkbox" id="saws" name="saws" value="Heat Guns" onclick="changeSaws()"> Saws</label>
                 </div>
                 <div class="checkbox">
                     <label><input type="checkbox" id="pliers" name="pliers" value="Pliers" onclick="changePliers()"> Pliers</label>
@@ -81,20 +81,20 @@
     let filterOptions = {
         inStockOnly : false,
         hammers : false,
-        heatGuns : false,
+        saws : false,
         pliers : false,
         screwdrivers : false,
         getFilters : function() {
             let filters = "&filters=";
             if (this.inStockOnly) {
                 if (this.hammers) filters += "1";
-                if (this.heatGuns) filters +="2";
+                if (this.saws) filters +="2";
                 if (this.pliers) filters += "3";
                 if (this.screwdrivers) filters += "4";
             } else {
                 filters += "9";
                 if (this.hammers) filters += "1";
-                if (this.heatGuns) filters +="2";
+                if (this.saws) filters +="2";
                 if (this.pliers) filters += "3";
                 if (this.screwdrivers) filters += "4";
             }
@@ -103,7 +103,7 @@
         anyFilters : function () {
             if (this.inStockOnly) return true;
             if (this.hammers) return true;
-            if (this.heatGuns) return true;
+            if (this.saws) return true;
             if (this.pliers) return true;
             if (this.screwdrivers) return true;
             return false;
@@ -170,9 +170,9 @@
         getTableData();
     }
 
-    function changeHeatGuns() {
-        const heatGunsCbx = document.getElementById('heatGuns');
-        filterOptions.heatGuns = heatGunsCbx.checked;
+    function changeSaws() {
+        const sawsCbx = document.getElementById('saws');
+        filterOptions.saws = sawsCbx.checked;
         getTableData();
     }
 

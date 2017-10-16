@@ -44,6 +44,15 @@ class ProductCollectionModel extends Model
         return $products;
     }
 
+    public function getAllProducts() {
+        $products = array();
+        foreach ($this->_productIds as $id) {
+            $product = (new ProductModel())->load($id);
+            array_push($products, $product);
+        }
+        return $products;
+    }
+
     public function search($search) {
         if (!$result = $this->db->query("SELECT `id` FROM `product` WHERE UPPER(`name`) LIKE UPPER('%$search%');")) {
             // throw new ...
