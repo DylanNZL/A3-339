@@ -41,8 +41,13 @@ class ProductController
      */
     public function browseAction()
     {
-        $view = new View('browse');
-        echo $view->render();
+        if  (!isset($_COOKIE["account"])) {
+            error_log("no cookie");
+            AccountController::indexAction();
+        } else {
+            $view = new View('browse');
+            echo $view->render();
+        }
     }
 
     /**
@@ -50,8 +55,13 @@ class ProductController
      */
     public function searchAction()
     {
-        $view = new View('search');
-        echo $view->render();
+        if  (!isset($_COOKIE["account"])) {
+            error_log("no cookie");
+            AccountController::indexAction();
+        } else {
+            $view = new View('search');
+            echo $view->render();
+        }
     }
 
     /**

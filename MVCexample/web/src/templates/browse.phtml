@@ -84,6 +84,7 @@
         saws : false,
         pliers : false,
         screwdrivers : false,
+        resetNeeded : false,
         getFilters : function() {
             let filters = "&filters=";
             if (this.inStockOnly) {
@@ -108,6 +109,9 @@
             if (this.pliers) return true;
             if (this.screwdrivers) return true;
             return false;
+        },
+        checkReset : function() {
+            return this.resetNeeded;
         }
     };
 
@@ -131,8 +135,12 @@
         };
         xhttp.open("POST", "/products", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        if (filterOptions.anyFilters()) {
+        if (filterOptions.anyFilters() && filterOptions.checkReset()) {
+            xhttp.send("current=0" + filterOptions.getFilters());
+        } else if (filterOptions.anyFilters() && !filterOptions.checkReset()) {
             xhttp.send("current=" + current + filterOptions.getFilters());
+        } else if (!filterOptions.anyFilters() && filterOptions.checkReset()) {
+            xhttp.send("current=0");
         } else {
             xhttp.send("current=" + current);
         }
@@ -162,30 +170,35 @@
     function changeInStockOnly() {
         const inStockOnlyCbx = document.getElementById('inStockOnly');
         filterOptions.inStockOnly = inStockOnlyCbx.checked;
+        filterOptions.checkReset();
         getTableData();
     }
 
     function changeHammers() {
         const hammersCbx = document.getElementById('hammers');
         filterOptions.hammers = hammersCbx.checked;
+        filterOptions.checkReset();
         getTableData();
     }
 
     function changeSaws() {
         const sawsCbx = document.getElementById('saws');
         filterOptions.saws = sawsCbx.checked;
+        filterOptions.checkReset();
         getTableData();
     }
 
     function changePliers() {
         const pliersCbx = document.getElementById('pliers');
         filterOptions.pliers = pliersCbx.checked;
+        filterOptions.checkReset();
         getTableData();
     }
 
     function changeScrewdrivers() {
         const screwdriversCbx = document.getElementById('screwdrivers');
         filterOptions.screwdrivers = screwdriversCbx.checked;
+        filterOptions.checkReset();
         getTableData();
     }
 
