@@ -33,9 +33,9 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="repeat" class="col-sm-4 col-form-label">Password: </label>
+                <label for="repeat" class="col-sm-4 col-form-label">Confirm Password: </label>
                 <div class="col-sm-8">
-                    <input type="password" name="repeat" id="repeat" placeholder="Password" class="form-control" oninput="checkPasswords()" required>
+                    <input type="password" name="repeat" id="repeat" placeholder="Confirm Password" class="form-control" oninput="checkPasswords ()" required>
                     <p id="errorNotification" class='alert alert-danger' style="display: none; position: absolute;"></p>
 
                 </div>
@@ -67,6 +67,21 @@
 
     let errorNotification = document.getElementById('errorNotification');
 
+    function passwordLength() {
+        const pw = document.getElementById("password");
+        if (pw.value.length < 7 || pw.value.length > 15) {
+            console.log(pw.value.length);
+            passwordLengthError = "Passwords Must Be Between 7 and 15 Characters Long<br>";
+            disableSubmit();
+        } else {
+            passwordLengthError = "";
+            enableSubmit();
+        }
+
+        checkPasswords();
+        passwordHasUpper();
+
+    }
 
     function checkPasswords() {
         const pw1 = document.getElementById("password");
@@ -80,28 +95,16 @@
         }
     }
 
-
-    function passwordLength() {
-        checkPasswords();
+    function passwordHasUpper() {
         const pw = document.getElementById("password");
-        if (pw.value.length < 7 || pw.value.length > 15) {
-            passwordLengthError = "Passwords Must Be Between 7 and 15 Characters Long<br>";
-            disableSubmit();
-            console.log("password error: " + passwordLengthError);
-        } else {
-            passwordLengthError = "";
-            console.log("password error: " + passwordLengthError);
-            enableSubmit();
-        }
+
         if (!hasUpperCase(pw.value)) {
             passwordUpperError = "Passwords Must Contain At Least One Upper Case Letter<br>";
-            console.log("password error: " + passwordUpperError);
 
             disableSubmit();
         } else {
             passwordUpperError = "";
             enableSubmit();
-            console.log("password error: " + passwordUpperError);
 
         }
 
@@ -109,33 +112,38 @@
 
     function usernameCheck() {
         const usernameToCheck = username.value;
-        let xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState === 4 && this.status === 200) {
-                const data = JSON.parse(this.responseText);
-                validUsername = data.valid;
+        if (usernameToCheck.length > 0) {
+            let xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    const data = JSON.parse(this.responseText);
+                    validUsername = data.valid;
 
-                if (!isAlphaNumeric(usernameToCheck)) {
-                    usernameError = "Username Can Only Contain Numbers and Letters<br>";
-                    disableSubmit();
-                    return
-                } else {
-                    usernameError = "";
-                    enableSubmit();
-                }
+                    if (!isAlphaNumeric(usernameToCheck)) {
+                        usernameError = "Username Can Only Contain Numbers and Letters<br>";
+                        disableSubmit();
+                        return
+                    } else {
+                        usernameError = "";
+                        enableSubmit();
+                    }
 
-                if (!validUsername) {
-                    usernameError = "Username Already Exists<br>";
-                    disableSubmit();
-                } else {
-                    usernameError = "";
-                    enableSubmit();
+                    if (!validUsername) {
+                        usernameError = "Username Already Exists<br>";
+                        disableSubmit();
+                    } else {
+                        usernameError = "";
+                        enableSubmit();
+                    }
                 }
-            }
-        };
-        xhttp.open("POST", "/checkUserName", true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("username=" + usernameToCheck);
+            };
+            xhttp.open("POST", "/checkUserName", true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("username=" + usernameToCheck);
+        } else {
+            usernameError = "";
+            enableSubmit()
+        }
 
     }
 
@@ -150,6 +158,7 @@
     }
 
     function enableSubmit() {
+        errorNotification.innerHTML = usernameError + passwordLengthError + passwordUpperError + passwordMatchError;
         if ((usernameError === "") && (passwordMatchError === "") && (passwordLengthError === "") && (passwordUpperError === "")) {
             bSubmit.disabled = false;
             errorNotification.style.display = "none";
@@ -177,13 +186,9 @@
         for (len = str.length; i < len; i++) {
             code = str.charCodeAt(i);
             if (code > 64 && code < 91) { //(A-Z)
-//                console.log(code);
-//                console.log("HAS UPPER");
                 return true;
             }
         }
-//        console.log(code);
-//        console.log(" doesn't HAS UPPER");
 
         return false;
     }
