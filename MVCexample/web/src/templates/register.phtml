@@ -112,33 +112,38 @@
 
     function usernameCheck() {
         const usernameToCheck = username.value;
-        let xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState === 4 && this.status === 200) {
-                const data = JSON.parse(this.responseText);
-                validUsername = data.valid;
+        if (usernameToCheck.length > 0) {
+            let xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    const data = JSON.parse(this.responseText);
+                    validUsername = data.valid;
 
-                if (!isAlphaNumeric(usernameToCheck)) {
-                    usernameError = "Username Can Only Contain Numbers and Letters<br>";
-                    disableSubmit();
-                    return
-                } else {
-                    usernameError = "";
-                    enableSubmit();
-                }
+                    if (!isAlphaNumeric(usernameToCheck)) {
+                        usernameError = "Username Can Only Contain Numbers and Letters<br>";
+                        disableSubmit();
+                        return
+                    } else {
+                        usernameError = "";
+                        enableSubmit();
+                    }
 
-                if (!validUsername) {
-                    usernameError = "Username Already Exists<br>";
-                    disableSubmit();
-                } else {
-                    usernameError = "";
-                    enableSubmit();
+                    if (!validUsername) {
+                        usernameError = "Username Already Exists<br>";
+                        disableSubmit();
+                    } else {
+                        usernameError = "";
+                        enableSubmit();
+                    }
                 }
-            }
-        };
-        xhttp.open("POST", "/checkUserName", true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("username=" + usernameToCheck);
+            };
+            xhttp.open("POST", "/checkUserName", true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("username=" + usernameToCheck);
+        } else {
+            usernameError = "";
+            enableSubmit()
+        }
 
     }
 
