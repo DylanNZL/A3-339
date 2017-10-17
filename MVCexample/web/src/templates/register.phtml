@@ -93,7 +93,7 @@
             console.log("password error: " + passwordLengthError);
             enableSubmit();
         }
-        if (!hasUpperCase(pw)) {
+        if (!hasUpperCase(pw.value)) {
             passwordUpperError = "Passwords Must Contain At Least One Upper Case Letter<br>";
             console.log("password error: " + passwordUpperError);
 
@@ -172,19 +172,18 @@
         return true;
     }
     function hasUpperCase(str) {
-        temp = str.value;
         let code, i, len;
         i = 0;
-        for (len = temp.length; i < len; i++) {
-            code = temp.charCodeAt(i);
+        for (len = str.length; i < len; i++) {
+            code = str.charCodeAt(i);
             if (code > 64 && code < 91) { //(A-Z)
-                console.log(code);
-                console.log("HAS UPPER");
+//                console.log(code);
+//                console.log("HAS UPPER");
                 return true;
             }
         }
-        console.log(code);
-        console.log(" doesn't HAS UPPER");
+//        console.log(code);
+//        console.log(" doesn't HAS UPPER");
 
         return false;
     }
