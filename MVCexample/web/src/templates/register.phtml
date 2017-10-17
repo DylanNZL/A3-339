@@ -83,25 +83,32 @@
 
     function passwordLength() {
         checkPasswords();
+        passwordHasUpper();
         const pw = document.getElementById("password");
         if (pw.value.length < 7 || pw.value.length > 15) {
             passwordLengthError = "Passwords Must Be Between 7 and 15 Characters Long<br>";
             disableSubmit();
-            console.log("password error: " + passwordLengthError);
+//            console.log("password error: " + passwordLengthError);
         } else {
             passwordLengthError = "";
-            console.log("password error: " + passwordLengthError);
+//            console.log("password error: " + passwordLengthError);
             enableSubmit();
         }
+
+    }
+
+    function passwordHasUpper() {
+        const pw = document.getElementById("password");
+
         if (!hasUpperCase(pw.value)) {
             passwordUpperError = "Passwords Must Contain At Least One Upper Case Letter<br>";
-            console.log("password error: " + passwordUpperError);
+//            console.log("password error: " + passwordUpperError);
 
             disableSubmit();
         } else {
             passwordUpperError = "";
             enableSubmit();
-            console.log("password error: " + passwordUpperError);
+//            console.log("password error: " + passwordUpperError);
 
         }
 
