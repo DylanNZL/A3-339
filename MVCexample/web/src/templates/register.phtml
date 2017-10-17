@@ -67,6 +67,19 @@
 
     let errorNotification = document.getElementById('errorNotification');
 
+    function passwordLength() {
+        checkPasswords();
+        passwordHasUpper();
+        const pw = document.getElementById("password");
+        if (pw.value.length < 7 || pw.value.length > 15) {
+            passwordLengthError = "Passwords Must Be Between 7 and 15 Characters Long<br>";
+            disableSubmit();
+        } else {
+            passwordLengthError = "";
+            enableSubmit();
+        }
+
+    }
 
     function checkPasswords() {
         const pw1 = document.getElementById("password");
@@ -80,35 +93,16 @@
         }
     }
 
-
-    function passwordLength() {
-        checkPasswords();
-        passwordHasUpper();
-        const pw = document.getElementById("password");
-        if (pw.value.length < 7 || pw.value.length > 15) {
-            passwordLengthError = "Passwords Must Be Between 7 and 15 Characters Long<br>";
-            disableSubmit();
-//            console.log("password error: " + passwordLengthError);
-        } else {
-            passwordLengthError = "";
-//            console.log("password error: " + passwordLengthError);
-            enableSubmit();
-        }
-
-    }
-
     function passwordHasUpper() {
         const pw = document.getElementById("password");
 
         if (!hasUpperCase(pw.value)) {
             passwordUpperError = "Passwords Must Contain At Least One Upper Case Letter<br>";
-//            console.log("password error: " + passwordUpperError);
 
             disableSubmit();
         } else {
             passwordUpperError = "";
             enableSubmit();
-//            console.log("password error: " + passwordUpperError);
 
         }
 
@@ -184,13 +178,9 @@
         for (len = str.length; i < len; i++) {
             code = str.charCodeAt(i);
             if (code > 64 && code < 91) { //(A-Z)
-//                console.log(code);
-//                console.log("HAS UPPER");
                 return true;
             }
         }
-//        console.log(code);
-//        console.log(" doesn't HAS UPPER");
 
         return false;
     }
