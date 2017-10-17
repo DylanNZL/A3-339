@@ -205,6 +205,10 @@ class AccountModel extends Model
         return $this;
     }
 
+    /**
+     * @param string $username
+     * @return bool
+     */
     public function checkUserName($username) {
         $username = $this->db->real_escape_string(SanitizeInput::username($username));
         $query = "SELECT 1 FROM `account` WHERE `username` = '$username';";

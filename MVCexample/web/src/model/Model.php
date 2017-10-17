@@ -44,10 +44,12 @@ class Model
             error_log("Mysql database not available!",0);
         }
 
+        //----------------------------------------------------------------------------
 
         /**
          * account table
          */
+
         $result = $this->db->query("SHOW TABLES LIKE 'account';");
         if ($result->num_rows == 0) {
             // table doesn't exist
@@ -78,9 +80,12 @@ class Model
             }
         }
 
+        //----------------------------------------------------------------------------
+
         /**
          * product table
          */
+
         $result = $this->db->query("SHOW TABLES LIKE 'product';");
         if ($result->num_rows == 0) {
             // table doesn't exist
@@ -129,7 +134,6 @@ class Model
                                               (NULL,'saw03', 'Dovetail Saw', 35.00, 'saws', 10),
                                               (NULL,'saw04', 'Pull Saw', 30.00, 'saws', 7),
                                               (NULL,'saw05', 'Toolbox Saw', 30.00, 'saws', 7);"
-
 
             )) {
                 // handle appropriately
