@@ -61,6 +61,7 @@
     let usernameError = "";
     let passwordMatchError = "";
     let passwordLengthError = "";
+    let passwordUpperError = "";
 
     const bSubmit = document.getElementById('submit');
 
@@ -81,7 +82,6 @@
 
 
     function passwordLength() {
-        checkPasswords();
         const pw = document.getElementById("password");
         if (pw.value.length < 7 || pw.value.length > 15) {
             passwordLengthError = "Passwords Must Be Between 7 and 15 Characters Long<br>";
@@ -92,6 +92,19 @@
             console.log("password error: " + passwordLengthError);
             enableSubmit();
         }
+        if (!hasUpperCase(pw)) {
+            passwordUpperError = "Passwords Must Contain At Least One Upper Case Letter<br>";
+            console.log("password error: " + passwordUpperError);
+
+            disableSubmit();
+        } else {
+            passwordUpperError = "";
+            enableSubmit();
+            console.log("password error: " + passwordUpperError);
+
+        }
+        checkPasswords();
+
     }
 
     function usernameCheck() {
@@ -127,17 +140,17 @@
     }
 
     function disableSubmit() {
-        if (passwordLengthError !== "" || passwordMatchError !== "" || usernameError !== "") {
+        if (passwordLengthError !== "" || passwordMatchError !== "" || usernameError !== "" || passwordUpperError !== "") {
             bSubmit.disabled = true;
             errorNotification.style.display = "initial";
-            errorNotification.innerHTML = usernameError + passwordLengthError + passwordMatchError;
+            errorNotification.innerHTML = usernameError + passwordLengthError + passwordUpperError + passwordMatchError;
 
         }
 
     }
 
     function enableSubmit() {
-        if ((usernameError === "") && (passwordMatchError === "") && (passwordLengthError === "")) {
+        if ((usernameError === "") && (passwordMatchError === "") && (passwordLengthError === "") && (passwordUpperError === "")) {
             bSubmit.disabled = false;
             errorNotification.style.display = "none";
         }
@@ -158,13 +171,12 @@
         }
         return true;
     }
-
     function hasUpperCase(str) {
         let code, i, len;
         i = 0;
         for (len = str.length; i < len; i++) {
             code = str.charCodeAt(i);
-            if (code > 64 && code < 91) { //(A-z)
+            if (code > 64 && code < 91) { //(A-Z)
                 return true;
             }
         }
