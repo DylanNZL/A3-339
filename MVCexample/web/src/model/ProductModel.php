@@ -189,7 +189,8 @@ class ProductModel extends Model implements \JsonSerializable
      */
     public function load($id)
     {
-        if (!$result = $this->db->query("SELECT * FROM `product` WHERE `id` = $id;")) {
+        $query = "SELECT * FROM `product` WHERE `id` = $id;";
+        if (!$result = $this->db->query($query)) {
             // throw new ...
         }
 
@@ -213,13 +214,15 @@ class ProductModel extends Model implements \JsonSerializable
     {
         if (!isset($this->_id)) {
             // New product - Perform INSERT
-            if (!$result = $this->db->query("INSERT INTO `product` VALUES (NULL, '$this->_sku', '$this->_name', '$this->_category',$this->cost, $this->_stock);")) {
+            $query = "INSERT INTO `product` VALUES (NULL, '$this->_sku', '$this->_name', '$this->_category',$this->cost, $this->_stock);";
+            if (!$result = $this->db->query($query)) {
                 // throw new ...
             }
             $this->_id = $this->db->insert_id;
         } else {
             // saving existing product - perform UPDATE on cost/stock
-            if (!$result = $this->db->query("UPDATE `product` SET `cost` = $this->cost, `stock` = $this->_stock  WHERE `id` = $this->_id;")) {
+            $query = "UPDATE `product` SET `cost` = $this->cost, `stock` = $this->_stock  WHERE `id` = $this->_id;";
+            if (!$result = $this->db->query($query)) {
                 // throw new ...
             }
         }

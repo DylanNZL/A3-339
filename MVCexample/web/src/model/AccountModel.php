@@ -1,6 +1,8 @@
 <?php
 namespace agilman\a2\model;
 
+use agilman\a2\Utility\SanitizeInput;
+
 
 /**
  * Class AccountModel
@@ -136,10 +138,15 @@ class AccountModel extends Model
     public static function  __constructWithVar($name, $username, $email, $password) {
         $account = new AccountModel();
 
-        $account->_name = $name;
-        $account->_username = $username;
-        $account->_email = $email;
-        $account->_password = $password;
+        $account->_name = $account->db->real_escape_string(SanitizeInput::name($name));
+        $account->_username = $account->db->real_escape_string(SanitizeInput::username($username));
+        $account->_email = $account->db->real_escape_string(SanitizeInput::email($email));
+        $account->_password = $account->db->real_escape_string(SanitizeInput::password($password));
+
+        error_log($account->_name);
+        error_log($account->_username);
+        error_log($account->_email);
+        error_log($account->_password);
 
         return $account;
     }
@@ -153,7 +160,9 @@ class AccountModel extends Model
      */
     public function load($id)
     {
-        if (!$result = $this->db->query("SELECT * FROM `account` WHERE `id` = $id;")) {
+        $id = $this->db->real_escape_string(($id));
+        $query = "SELECT * FROM `account` WHERE `id` = $id;";
+        if (!$result = $this->db->query($query)) {
             // throw new ...
         }
 
@@ -173,7 +182,9 @@ class AccountModel extends Model
      * @return $this
      */
     public function loadFromUsername($username) {
-        if (!$result = $this->db->query("SELECT * FROM `account` WHERE `username` = '$username';")) {
+        $username = $this->db->real_escape_string(SanitizeInput::username($username));
+        $query = "SELECT * FROM `account` WHERE `username` = '$username';";
+        if (!$result = $this->db->query($query)) {
             // throw new ...
             $this->_id = null;
             $this->_name = null;
@@ -195,12 +206,9 @@ class AccountModel extends Model
     }
 
     public function checkUserName($username) {
-//        if (!$result = $this->db->query("SELECT * FROM `account` WHERE `username` = '$username';")) {
-//            return false;
-//        }
-//        return true;
-
-        $result = $this->db->query("SELECT 1 FROM `account` WHERE `username` = '$username';");
+        $username = $this->db->real_escape_string(SanitizeInput::username($username));
+        $query = "SELECT 1 FROM `account` WHERE `username` = '$username';";
+        $result = $this->db->query($query);
         if (mysqli_num_rows($result) > 0) {
             return false;
         }
@@ -219,13 +227,15 @@ class AccountModel extends Model
     {
         if (!isset($this->_id)) {
             // New account - Perform INSERT
-            if (!$result = $this->db->query("INSERT INTO `account` VALUES (NULL,'$this->_name', '$this->_username', '$this->_email', '$this->_password');")) {
+            $query = "INSERT INTO `account` VALUES (NULL,'$this->_name', '$this->_username', '$this->_email', '$this->_password');";
+            if (!$result = $this->db->query($query)) {
                 // throw new ...
             }
             $this->_id = $this->db->insert_id;
         } else {
             // saving existing account - perform UPDATE
-            if (!$result = $this->db->query("UPDATE `account` SET `email` = '$this->_email', `password` = '$this->_password' WHERE `id` = $this->_id;")) {
+            $query = "UPDATE `account` SET `email` = '$this->_email', `password` = '$this->_password' WHERE `id` = $this->_id;";
+            if (!$result = $this->db->query($query)) {
                 // throw new ...
             }
 

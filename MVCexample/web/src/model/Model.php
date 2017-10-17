@@ -69,9 +69,9 @@ class Model
             }
 
             if(!$this->db->query(
-                "INSERT INTO `account` VALUES (NULL,'Dylan', 'dylan', 'dylan@example.com', '123'),
-                                              (NULL,'Jordan', 'jordan', 'jordan@example.com', '123'),
-                                              (NULL, 'Tim Taylor', 'TheToolman', 'tim@thetoolman.com', 'TheToolman');"
+                "INSERT INTO `account` VALUES (NULL,'Dylan', 'dylan', 'dylan@example.com', '". password_hash("123", PASSWORD_BCRYPT) . "'),
+                                              (NULL,'Jordan', 'jordan', 'jordan@example.com', '". password_hash("123", PASSWORD_BCRYPT) ."'),
+                                              (NULL, 'Tim Taylor', 'TheToolman', 'tim@thetoolman.com', '" . password_hash("TheToolman", PASSWORD_BCRYPT) ."');"
             )) {
                 // handle appropriately
                 error_log("Failed creating sample data!",0);

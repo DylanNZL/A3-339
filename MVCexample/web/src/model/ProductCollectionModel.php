@@ -18,7 +18,8 @@ class ProductCollectionModel extends Model
     {
         parent::__construct();
 
-        if (!$result = $this->db->query("SELECT `id` FROM `product`;")) {
+        $query = "SELECT `id` FROM `product`;";
+        if (!$result = $this->db->query($query)) {
             // throw new ...
         }
         $this->_productIds = array_column($result->fetch_all(), 0);

@@ -2,6 +2,7 @@
 namespace agilman\a2\controller;
 
 use agilman\a2\model\AccountModel;
+use agilman\a2\Utility\SanitizeInput;
 use agilman\a2\view\View;
 
 /**
@@ -39,13 +40,12 @@ class AccountController extends Controller
     {
         $account = new AccountModel();
         $account = $account->loadFromUsername($_POST['username']);
-
-
+        $password = $_POST['password'];
         error_log($account->getId());
 
         if ($account->getId() == null) {
             return($this->indexActionWithError("That username doesn't exist"));
-        } else if ($_POST['password'] != $account->getPassword()) {
+        } else if (!password_verify($password, $account->getPassword())) {
             return($this->indexActionWithError("Incorrect Password"));
         } else {
             $accountCookie = array('id' => $account->getId(),
