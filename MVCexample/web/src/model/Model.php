@@ -71,7 +71,7 @@ class Model
             if(!$this->db->query(
                 "INSERT INTO `account` VALUES (NULL,'Dylan', 'dylan', 'dylan@example.com', '123'),
                                               (NULL,'Jordan', 'jordan', 'jordan@example.com', '123'),
-                                              (NULL, 'Tim Taylor', 'tim@thetoolman.com', 'TheToolman', 'TheToolman');"
+                                              (NULL, 'Tim Taylor', 'TheToolman', 'tim@thetoolman.com', 'TheToolman');"
             )) {
                 // handle appropriately
                 error_log("Failed creating sample data!",0);
