@@ -82,6 +82,7 @@
 
 
     function passwordLength() {
+        checkPasswords();
         const pw = document.getElementById("password");
         if (pw.value.length < 7 || pw.value.length > 15) {
             passwordLengthError = "Passwords Must Be Between 7 and 15 Characters Long<br>";
@@ -103,7 +104,6 @@
             console.log("password error: " + passwordUpperError);
 
         }
-        checkPasswords();
 
     }
 
@@ -172,14 +172,20 @@
         return true;
     }
     function hasUpperCase(str) {
+        temp = str.value;
         let code, i, len;
         i = 0;
-        for (len = str.length; i < len; i++) {
-            code = str.charCodeAt(i);
+        for (len = temp.length; i < len; i++) {
+            code = temp.charCodeAt(i);
             if (code > 64 && code < 91) { //(A-Z)
+                console.log(code);
+                console.log("HAS UPPER");
                 return true;
             }
         }
+        console.log(code);
+        console.log(" doesn't HAS UPPER");
+
         return false;
     }
 
