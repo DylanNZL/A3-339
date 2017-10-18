@@ -70,7 +70,6 @@
     function passwordLength() {
         const pw = document.getElementById("password");
         if (pw.value.length < 7 || pw.value.length > 15) {
-            console.log(pw.value.length);
             passwordLengthError = "Passwords Must Be Between 7 and 15 Characters Long<br>";
             disableSubmit();
         } else {
