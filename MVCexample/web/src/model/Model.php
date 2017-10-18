@@ -134,7 +134,6 @@ class Model
                                               (NULL,'saw03', 'Dovetail Saw', 35.00, 'saws', 10),
                                               (NULL,'saw04', 'Pull Saw', 30.00, 'saws', 7),
                                               (NULL,'saw05', 'Toolbox Saw', 30.00, 'saws', 7);"
-
             )) {
                 // handle appropriately
                 error_log("Failed creating sample data!",0);
