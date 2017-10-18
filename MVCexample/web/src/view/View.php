@@ -1,9 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: andrew
- * Date: 30/08/17
- * Time: 4:38 PM
+
+/*Dylan Cross ID#15219491
+ *Jordan Felix ID#15152699
+ *Assignment 3
  */
 
 namespace agilman\a2\view;

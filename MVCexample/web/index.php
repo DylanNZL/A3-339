@@ -1,16 +1,10 @@
 <?php
-/**
- * 159.339 Internet Programming 2017.2
- * Student ID: 99999999
- * Assignment: 2   Date: 01/09/17
- * System: PHP 7.1
- * Code guidelines: PSR-1, PSR-2
- *
- * FRONT CONTROLLER - Responsible for URL routing and User Authentication
- *
- * @package agilman/a2
- * @author  A. Gilman <a.gilman@massey.ac.nz>
- **/
+
+/*Dylan Cross ID#15219491
+ *Jordan Felix ID#15152699
+ *Assignment 3
+ */
+
 date_default_timezone_set('Pacific/Auckland');
 
 require __DIR__ . '/vendor/autoload.php';
