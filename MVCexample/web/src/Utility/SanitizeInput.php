@@ -5,7 +5,7 @@
  *Assignment 3
  */
 
-namespace agilman\a2\Utility;
+namespace a3\Utility;
 namespace a3\Utility;
 /**
  * Provides functions to sanitize user input

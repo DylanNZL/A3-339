@@ -5,7 +5,7 @@
  *Assignment 3
  */
 
-namespace agilman\a2\controller;
+namespace a3\controller;
 namespace a3\controller;
 
 /**

@@ -5,7 +5,7 @@
  *Assignment 3
  */
 
-namespace agilman\a2\model;
+namespace a3\model;
 namespace a3\model;
 
 use a3\Utility\SanitizeInput;
