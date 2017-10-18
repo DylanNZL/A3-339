@@ -6,6 +6,7 @@
  */
 
 namespace agilman\a2\controller;
+namespace a3\controller;
 
 /**
  * Class Controller

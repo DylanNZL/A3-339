@@ -5,7 +5,7 @@
  *Assignment 3
  */
 
-namespace agilman\a2\view;
+namespace a3\view;
 
 /**
  * Class View

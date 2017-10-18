@@ -1,4 +1,5 @@
 <?php
+namespace a3\model;
 
 /*Dylan Cross ID#15219491
  *Jordan Felix ID#15152699

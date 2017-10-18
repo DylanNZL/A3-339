@@ -5,11 +5,11 @@
  *Assignment 3
  */
 
-namespace agilman\a2\model;
+namespace a3\model;
 
 /**
  * Class ProductModel
- * @package agilman\a2\model
+ * @package a3\model
  */
 class ProductModel extends Model implements \JsonSerializable
 {

@@ -6,6 +6,7 @@
  */
 
 namespace agilman\a2\model;
+namespace a3\model;
 
 use mysqli;
 

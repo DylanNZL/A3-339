@@ -51,3 +51,5 @@ Temporary Items
 *.out
 *.exe
 .vscode
+
+*.json
