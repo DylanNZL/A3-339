@@ -1,32 +1,8 @@
 <?php
-    include "header.phtml"
+    include "header.phtml";
+    include "nav.phtml";
 ?>
 <div id="container">
-
-    <div id="nav">
-        <nav class="navbar navbar-expand-md navbar-light bg-light rounded mb-3">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav text-md-center nav-justified w-100">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/browse">Browse</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/search">Search</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/logout">Logout</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </div>
-
     <div id="content" class="row">
         <div id="sideBar" class="col-sm-2">
             <form id="filter">
@@ -69,10 +45,6 @@
                 </tbody>
             </table>
             </div>
-            <div id="navBtns">
-                <button type="submit" id="back" class="btn btn-primary" onclick="return backProducts()">Back</button>
-                <button type="submit" id="next" class="btn btn-primary" onclick="return nextProducts()">Next</button>
-            </div>
         </div>
     </div>
 </div>
@@ -84,9 +56,8 @@
         saws : false,
         pliers : false,
         screwdrivers : false,
-        resetNeeded : false,
         getFilters : function() {
-            let filters = "&filters=";
+            let filters = "filters=";
             if (this.inStockOnly) {
                 filters += "9";
                 if (this.hammers) filters += "1";
@@ -109,17 +80,9 @@
             if (this.pliers) return true;
             if (this.screwdrivers) return true;
             return false;
-        },
-        checkReset : function() {
-            return this.resetNeeded;
         }
     };
-
-    let current;
-    window.onload = function() {
-        current = 0;
-        getTableData();
-    };
+    window.onload = getTableData();
 
     function getTableData() {
         console.log(filterOptions);
@@ -135,15 +98,10 @@
         };
         xhttp.open("POST", "/products", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        if (filterOptions.anyFilters() && filterOptions.checkReset()) {
-            xhttp.send("current=0" + filterOptions.getFilters());
-        } else if (filterOptions.anyFilters() && !filterOptions.checkReset()) {
-            xhttp.send("current=" + current + filterOptions.getFilters());
-        } else if (!filterOptions.anyFilters() && filterOptions.checkReset()) {
-            xhttp.send("current=0");
-        } else {
-            xhttp.send("current=" + current);
+        if (filterOptions.anyFilters()) {
+            xhttp.send(filterOptions.getFilters());
         }
+        xhttp.send();
     }
 
     function loadTable(data) {
@@ -170,45 +128,30 @@
     function changeInStockOnly() {
         const inStockOnlyCbx = document.getElementById('inStockOnly');
         filterOptions.inStockOnly = inStockOnlyCbx.checked;
-        filterOptions.checkReset();
         getTableData();
     }
 
     function changeHammers() {
         const hammersCbx = document.getElementById('hammers');
         filterOptions.hammers = hammersCbx.checked;
-        filterOptions.checkReset();
         getTableData();
     }
 
     function changeSaws() {
         const sawsCbx = document.getElementById('saws');
         filterOptions.saws = sawsCbx.checked;
-        filterOptions.checkReset();
         getTableData();
     }
 
     function changePliers() {
         const pliersCbx = document.getElementById('pliers');
         filterOptions.pliers = pliersCbx.checked;
-        filterOptions.checkReset();
         getTableData();
     }
 
     function changeScrewdrivers() {
         const screwdriversCbx = document.getElementById('screwdrivers');
         filterOptions.screwdrivers = screwdriversCbx.checked;
-        filterOptions.checkReset();
-        getTableData();
-    }
-
-    function nextProducts() {
-        current += 20;
-        getTableData();
-    }
-
-    function backProducts() {
-        if (current !== 0) current -= 20;
         getTableData();
     }
 </script>

@@ -1,32 +1,8 @@
 <?php
-    include "header.phtml"
+    include "header.phtml";
+    include "nav.phtml";
 ?>
 <div id="container">
-
-    <div id="nav">
-        <nav class="navbar navbar-expand-md navbar-light bg-light rounded mb-3">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav text-md-center nav-justified w-100">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/browse">Browse</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/search">Search</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/logout">Logout</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </div>
-
     <div id="content" class="col-sm-12">
         <div id="searchBar" class="col-sm-6">
             <div class="form-group row">
@@ -40,7 +16,7 @@
 
         <h3>Available Products:</h3>
 
-        <div id="productTable">
+        <div id="searchTable">
             <table id="product" class="table">
                 <thead>
                 <tr>
@@ -54,11 +30,6 @@
 
                 </tbody>
             </table>
-        </div>
-
-        <div id="navBtns">
-            <button type="submit" id="back" class="btn btn-primary" onclick="return backProducts()">Back</button>
-            <button type="submit" id="next" class="btn btn-primary" onclick="return nextProducts()">Next</button>
         </div>
     </div>
 </div>

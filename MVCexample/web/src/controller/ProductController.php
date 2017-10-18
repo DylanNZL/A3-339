@@ -79,12 +79,6 @@ class ProductController
      *
      */
     public function productAction() {
-        error_log($_POST['current']);
-        if ($_POST['current'] == null || !is_numeric($_POST['current'])) {
-            $current = 0;
-        } else {
-            $current = $_POST['current'];
-        }
         $productCollectionModel = new ProductCollectionModel();
 
         // Filters
@@ -95,7 +89,7 @@ class ProductController
             }
         }
 
-        $products = $productCollectionModel->getProductsBetween($current, $current + 20);
+        $products = $productCollectionModel->getAllProducts();
         echo json_encode($products);
     }
 

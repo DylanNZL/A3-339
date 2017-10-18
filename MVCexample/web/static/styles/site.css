@@ -1,6 +1,12 @@
 body {
     padding: 50px;
 }
+footer {
+}
+
+#hammerImage {
+    height: 40px;
+}
 
 /*
  * Login Page
@@ -19,13 +25,15 @@ body {
  * Browse Page
  */
 #content {
-    height: 720px;
+    height: 700px;
 }
+
 #sideBar {
-    height: 720px;
+    height: 700px;
 }
+
 #productTable{
-    height:650px;
+    height:700px;
     overflow-y: auto;
 }
 
@@ -33,5 +41,12 @@ body {
     float: right;
 }
 
-footer {
+/**
+ * Register Page
+ */
+#searchTable {
+    height:650px;
+    overflow-y: auto;
 }
+
+

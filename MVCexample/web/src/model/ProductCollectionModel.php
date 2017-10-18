@@ -30,26 +30,6 @@ class ProductCollectionModel extends Model
     }
 
     /**
-     * @param $min
-     * @param $max
-     *
-     * @return ProductModel[]
-     */
-    public function getProductsBetween($min, $max)
-    {
-        error_log($min . " "  . $max);
-        $products = array();
-        $i = 0;
-        foreach ($this->_productIds as $id) {
-            if ($i >= $min && $i <= $max) {
-                $product = (new ProductModel())->load($id);
-                array_push($products, $product);
-            }
-        }
-        return $products;
-    }
-
-    /**
      * @return ProductModel[]
      */
     public function getAllProducts() {
