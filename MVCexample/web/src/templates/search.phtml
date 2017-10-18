@@ -33,6 +33,7 @@
                 <label for="name" class="col-sm-4 col-form-label">Search: </label>
                 <div class="col-sm-8">
                     <input type="text" id="search" placeholder="Search" class="form-control" oninput="return search()">
+                    <p id="errorNotification" class='alert alert-danger' style="display: none; position: absolute;">No results found</p>
                 </div>
             </div>
         </div>
@@ -82,13 +83,20 @@
     }
 
     function loadTable(data) {
+        let errorNotification = document.getElementById('errorNotification');
         let table = document.getElementById('product');
         let rowCount = table.rows.length;
         while(--rowCount) { table.deleteRow(rowCount) }
 
+        console.log(data);
+        if (data.length === 0) {
+            errorNotification.style.display = "initial";
+        }
+
         data.forEach(function (product) {
 //            console.log(product);
 //            console.log(product._sku);
+            errorNotification.style.display = "none";
             let row = table.insertRow();
 
             let sku = row.insertCell(0);
