@@ -6,52 +6,57 @@
         <h1>Welcome to Toolshed</h1>
     </div>
     <br>
-    <div id="formHolder">
-        <form action="/register" onsubmit="validateForm()" method="POST" name="register">
-            <div class="form-group row">
-                <label for="name" class="col-sm-4 col-form-label">Name: </label>
-                <div class="col-sm-8">
-                    <input type="text" name="name" id="name" placeholder="Name" class="form-control" required>
+    <div class="row">
+        <div id="logo" class="col-sm-4">
+            <img src="/static/images/hammer.png" id="logoImage"/>
+        </div>
+        <div id="formHolder" class="col-sm-4">
+            <form action="/register" onsubmit="validateForm()" method="POST" name="register">
+                <div class="form-group row">
+                    <label for="name" class="col-sm-4 col-form-label">Name: </label>
+                    <div class="col-sm-8">
+                        <input type="text" name="name" id="name" placeholder="Name" class="form-control" required>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row" id="usernameDiv">
-                <label for="username" class="col-sm-4 col-form-label">Username: </label>
-                <div class="col-sm-8">
-                    <input type="text" name="username" id="username" placeholder="Username" class="form-control" oninput="usernameCheck()" required>
+                <div class="form-group row" id="usernameDiv">
+                    <label for="username" class="col-sm-4 col-form-label">Username: </label>
+                    <div class="col-sm-8">
+                        <input type="text" name="username" id="username" placeholder="Username" class="form-control" oninput="usernameCheck()" required>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for="email" class="col-sm-4 col-form-label">Email: </label>
-                <div class="col-sm-8">
-                    <input type="email" name="email" id="email" placeholder="email@example.com" class="form-control" required>
+                <div class="form-group row">
+                    <label for="email" class="col-sm-4 col-form-label">Email: </label>
+                    <div class="col-sm-8">
+                        <input type="email" name="email" id="email" placeholder="email@example.com" class="form-control" required>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for="password" class="col-sm-4 col-form-label">Password: </label>
-                <div class="col-sm-8">
-                    <input type="password" name="password" id="password" placeholder="Password" class="form-control" oninput="passwordLength()" required>
+                <div class="form-group row">
+                    <label for="password" class="col-sm-4 col-form-label">Password: </label>
+                    <div class="col-sm-8">
+                        <input type="password" name="password" id="password" placeholder="Password" class="form-control" oninput="passwordLength()" required>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for="repeat" class="col-sm-4 col-form-label">Confirm Password: </label>
-                <div class="col-sm-8">
-                    <input type="password" name="repeat" id="repeat" placeholder="Confirm Password" class="form-control" oninput="checkPasswords ()" required>
-                    <p id="errorNotification" class='alert alert-danger' style="display: none; position: absolute;"></p>
+                <div class="form-group row">
+                    <label for="repeat" class="col-sm-4 col-form-label">Confirm Password: </label>
+                    <div class="col-sm-8">
+                        <input type="password" name="repeat" id="repeat" placeholder="Confirm Password" class="form-control" oninput="checkPasswords ()" required>
+                        <p id="errorNotification" class='alert alert-danger' style="display: none; position: absolute;"></p>
+
+                    </div>
 
                 </div>
-
-            </div>
-            <div class="form-group row">
-                <div class="col-sm-offset-6 col-sm-6">
-                    <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+                <div class="form-group row">
+                    <div class="col-sm-offset-6 col-sm-6">
+                        <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+                    </div>
                 </div>
-            </div>
-        </form>
-        <div id="demo">
-            <br>
-
+            </form>
+        </div>
+        <div id="padding" class="col-sm-4">
+            <p></p>
         </div>
     </div>
+
 </div>
 
 <script>
