@@ -1,9 +1,9 @@
 <?php
-namespace agilman\a2\controller;
+namespace a3\controller;
 
-use agilman\a2\model\AccountModel;
-use agilman\a2\Utility\SanitizeInput;
-use agilman\a2\view\View;
+use a3\model\AccountModel;
+use a3\Utility\SanitizeInput;
+use a3\view\View;
 
 /**
  * Class AccountController

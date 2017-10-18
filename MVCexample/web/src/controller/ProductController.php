@@ -6,16 +6,16 @@
  * Time: 3:37 PM
  */
 
-namespace agilman\a2\controller;
+namespace a3\controller;
 
-use agilman\a2\model\ProductCollectionModel;
-use agilman\a2\model\ProductModel;
-use agilman\a2\view\View;
+use a3\model\ProductCollectionModel;
+use a3\model\ProductModel;
+use a3\view\View;
 
 /**
  * Class ProductController
  *
- * @package agilman\a2\controller
+ * @package a3\controller
  */
 class ProductController
 {

@@ -27,7 +27,7 @@ $collection = new RouteCollection();
 $collection->attachRoute(
     new Route(
         '/', array(
-            '_controller' => 'agilman\a2\controller\AccountController::indexAction',
+            '_controller' => 'a3\controller\AccountController::indexAction',
             'methods' => 'GET',
             'name' => 'accountIndex'
         )
@@ -38,7 +38,7 @@ $collection->attachRoute(
 $collection->attachRoute(
     new Route(
         '/login', array(
-            '_controller' => 'agilman\a2\controller\AccountController::loginAction',
+            '_controller' => 'a3\controller\AccountController::loginAction',
             'methods' => 'POST',
             'name' => 'accountLogin'
         )
@@ -49,7 +49,7 @@ $collection->attachRoute(
 $collection->attachRoute(
     new Route(
         '/register', array(
-            '_controller' => 'agilman\a2\controller\AccountController::registerAction',
+            '_controller' => 'a3\controller\AccountController::registerAction',
             'methods' => 'GET',
             'name' => 'accountRegister'
         )
@@ -60,7 +60,7 @@ $collection->attachRoute(
 $collection->attachRoute(
     new Route(
         '/register', array(
-            '_controller' => 'agilman\a2\controller\AccountController::createAction',
+            '_controller' => 'a3\controller\AccountController::createAction',
             'methods' => 'POST',
             'name' => 'accountCreate'
         )
@@ -71,7 +71,7 @@ $collection->attachRoute(
 $collection->attachRoute(
     new Route(
         '/home', array(
-            '_controller' => 'agilman\a2\controller\ProductController::indexAction',
+            '_controller' => 'a3\controller\ProductController::indexAction',
             'methods' => 'GET',
             'name' => 'productIndex'
         )
@@ -82,7 +82,7 @@ $collection->attachRoute(
 $collection->attachRoute(
     new Route(
         '/browse', array(
-            '_controller' => 'agilman\a2\controller\ProductController::browseAction',
+            '_controller' => 'a3\controller\ProductController::browseAction',
             'methods' => 'GET',
             'name' => 'accountBrowse'
         )
@@ -93,7 +93,7 @@ $collection->attachRoute(
 $collection->attachRoute(
     new Route(
         '/search', array(
-            '_controller' => 'agilman\a2\controller\ProductController::searchAction',
+            '_controller' => 'a3\controller\ProductController::searchAction',
             'methods' => 'GET',
             'name' => 'accountBrowse'
         )
@@ -104,7 +104,7 @@ $collection->attachRoute(
 $collection->attachRoute(
     new Route(
         '/logout', array(
-            '_controller' => 'agilman\a2\controller\AccountController::logoutAction',
+            '_controller' => 'a3\controller\AccountController::logoutAction',
             'methods' => 'GET',
             'name' => 'accountLogin'
         )
@@ -115,7 +115,7 @@ $collection->attachRoute(
 $collection->attachRoute(
     new Route(
         '/checkUserName', array(
-            '_controller' => 'agilman\a2\controller\AccountController::usernameAction',
+            '_controller' => 'a3\controller\AccountController::usernameAction',
             'methods' => 'POST',
             'name' => 'accountCheckUserName'
         )
@@ -126,7 +126,7 @@ $collection->attachRoute(
 $collection->attachRoute(
     new Route(
         '/products', array(
-            '_controller' => 'agilman\a2\controller\ProductController::productAction',
+            '_controller' => 'a3\controller\ProductController::productAction',
             'methods' => 'POST',
             'name' => 'productGetProducts'
         )
@@ -137,7 +137,7 @@ $collection->attachRoute(
 $collection->attachRoute(
     new Route(
         '/search', array(
-            '_controller' => 'agilman\a2\controller\ProductController::searchProductsAction',
+            '_controller' => 'a3\controller\ProductController::searchProductsAction',
             'methods' => 'POST',
             'name' => 'productSearchProducts'
         )

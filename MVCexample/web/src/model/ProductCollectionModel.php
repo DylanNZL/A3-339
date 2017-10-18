@@ -6,7 +6,7 @@
  * Time: 3:01 PM
  */
 
-namespace agilman\a2\model;
+namespace a3\model;
 
 
 class ProductCollectionModel extends Model

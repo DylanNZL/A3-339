@@ -1,7 +1,7 @@
 <?php
-namespace agilman\a2\model;
+namespace a3\model;
 
-use agilman\a2\Utility\SanitizeInput;
+use a3\Utility\SanitizeInput;
 
 
 /**
