@@ -82,7 +82,7 @@ include "header.phtml"
         const pw = document.getElementById("password");
         if (pw.value.length < 7 || pw.value.length > 15) {
             passwordLengthError = "Passwords Must Be Between 7 and 15 Characters Long<br>";
-            disableSubmit();
+            disable();
         } else {
             passwordLengthError = "";
             enableSubmit();
